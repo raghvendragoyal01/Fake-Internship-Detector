@@ -33,7 +33,10 @@ By integrating standard NLP text preprocessing, class-balancing techniques, and 
 ├── notebooks/               # Step-by-step Jupyter Notebook workflow
 │   ├── 01_Data_Inspection.ipynb
 │   ├── 02_Dataset_Augmentation_and_Balancing.ipynb
-│   └── 03_Data_Preprocessing.ipynb
+│   ├── 03_Data_Preprocessing.ipynb
+│   ├── 04_Fraud_Feature_Engineering.ipynb
+│   ├── 05_Model_Preparation_v2.ipynb
+│   └── 06_Model_Training.ipynb
 ├── .gitignore               # Ignored files configuration
 └── README.md                # Project documentation
 ```
@@ -63,6 +66,21 @@ By integrating standard NLP text preprocessing, class-balancing techniques, and 
   * Strips URLs and email addresses.
   * Normalizes text (lowercase conversion, unicode normalization, punctuation/digit removal, and extra whitespace stripping).
 * Generates a finalized dataset ready for vectorization and machine learning model training.
+
+### 4. [04_Fraud_Feature_Engineering.ipynb](notebooks/04_Fraud_Feature_Engineering.ipynb) (Feature Engineering)
+* Engineers specific risk indicator features: `keyword_risk_score` and `salary_risk_score` to detect common scam patterns (e.g., "registration fee", "telegram").
+* Calculates text-based metrics: `text_length`, `word_count`, and `avg_word_length`.
+* Utilizes TF-IDF vectorization (5000 max features) to represent linguistic patterns of job postings.
+
+### 5. [05_Model_Preparation_v2.ipynb](notebooks/05_Model_Preparation_v2.ipynb) (Data Preparation & Leakage Fix)
+* Identifies and removes features causing severe Data Leakage (e.g., `domain_frequency` forcing models to overfit on legitimate job domains).
+* Finalizes and structures Train/Test data splits.
+* Saves sparse feature matrices (`X_train.npz`, `X_test.npz`) for optimized downstream training.
+
+### 6. [06_Model_Training.ipynb](notebooks/06_Model_Training.ipynb) (Model Training & Evaluation)
+* Trains three distinct machine learning algorithms (Logistic Regression, Random Forest, and XGBoost).
+* Adjusts class weights and hyperparameters to combat class imbalance.
+* Constructs `predict_job_v3()`, a robust inference pipeline capable of assessing raw job texts and reporting fraud probabilities.
 
 ---
 
@@ -99,7 +117,7 @@ jupyter notebook notebooks/
 ---
 
 ## 🔮 Future Roadmap
-- [ ] Train Machine Learning classifiers (Naive Bayes, SVM, Random Forest, or XGBoost) to categorize listings.
+- [x] Train Machine Learning classifiers (Logistic Regression, Random Forest, XGBoost) to categorize listings and identify scammers.
 - [ ] Build a **FastAPI backend** to serve predictions based on a text description input.
 - [ ] Design a **Streamlit frontend** dashboard allowing users to paste job descriptions and obtain immediate scam risk assessments.
 
