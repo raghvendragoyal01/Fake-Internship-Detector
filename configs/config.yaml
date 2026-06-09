@@ -1,0 +1,40 @@
+# Antigravity ML Configuration
+
+data:
+  raw_master_path: "data/raw/master_dataset_v2.csv"
+  raw_augmented_path: "data/raw/augmented_fake_jobs.csv"
+  processed_dataset_path: "data/processed/Final_dataset.csv"
+  external_test_path: "data/external/external_test.xlsx"
+
+training:
+  random_seed: 42
+  initial_test_size: 0.3
+  val_split_size: 0.5 # Creates a 70/15/15 Train/Val/Test split
+
+model:
+  algorithm: "xgboost"
+  n_estimators: 1000
+  learning_rate: 0.05
+  max_depth: 4
+  min_child_weight: 5
+  subsample: 0.8
+  colsample_bytree: 0.8
+  gamma: 0.2
+  reg_lambda: 1.5
+  early_stopping_rounds: 50
+  eval_metric: "logloss"
+
+tfidf:
+  max_features: 5000
+  ngram_range: [1, 2]
+  min_df: 2
+  max_df: 0.95
+  sublinear_tf: true
+
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - roc_auc

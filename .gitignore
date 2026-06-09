@@ -1,0 +1,51 @@
+# Data
+data/raw/
+data/processed/
+data/interim/
+*.csv
+*.parquet
+*.feather
+*.h5
+*.hdf5
+
+# Except external demo data
+!data/external/external_test.xlsx
+
+# Models
+models/saved/
+models/checkpoints/
+*.pkl
+*.pt
+*.pth
+*.joblib
+*.onnx
+
+# Notebooks
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Archive/Redundant
+archive/
+eval_results.txt
