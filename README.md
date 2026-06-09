@@ -1,5 +1,3 @@
-# Antigravity: Fraudulent Job & Internship Detection System
-
 ## Problem Statement
 The objective of this project is to accurately detect fraudulent job and internship postings. Due to the high risk of job scams, the system analyzes text patterns, handcrafted regex rules (such as daily salaries and suspicious emails), and semantic features to classify job listings as legitimate or fraudulent.
 
