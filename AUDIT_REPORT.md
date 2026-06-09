@@ -1,5 +1,3 @@
-# Antigravity — ML Project Audit Report
-
 ## 1. Project Overview
 - **What is this project?** A system for identifying fraudulent job and internship postings based on job descriptions, salaries, and associated metadata.
 - **What problem does it solve?** It protects job seekers from scams by automatically flagging suspicious postings before they are displayed.
