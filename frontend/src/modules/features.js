@@ -200,6 +200,33 @@ function bindProfileForm() {
     };
     reader.readAsDataURL(file);
   });
+
+  // Load profile data on init
+  loadUserProfile();
+}
+
+export async function loadUserProfile() {
+  const user = getUser();
+  if (!user || !user.token) return;
+
+  try {
+    const { data } = await api.getProfile(user.token);
+    if (!data) return;
+
+    if (data.linkedin_url) document.getElementById('profileLinkedin').value = data.linkedin_url;
+    if (data.indeed_url) document.getElementById('profileIndeed').value = data.indeed_url;
+    if (data.naukri_url) document.getElementById('profileNaukri').value = data.naukri_url;
+
+    if (data.profile_picture) {
+      const preview = document.getElementById('profilePhotoPreview');
+      if (preview) {
+        preview.src = data.profile_picture;
+        preview.classList.remove('hidden');
+      }
+    }
+  } catch (err) {
+    console.error('[Profile] Failed to load profile:', err.message);
+  }
 }
 
 async function handleProfileSave(e) {

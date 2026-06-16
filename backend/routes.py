@@ -241,6 +241,23 @@ class ProfileSaveRequest(BaseModel):
     naukri: Optional[str] = None
     profile_picture: Optional[str] = None
 
+@router.get("/profile")
+async def get_profile(user_email: str = Depends(get_current_user)):
+    try:
+        db = db_module()
+        data = {"user_email": user_email} if user_email else {}
+        result = _call_first_available(
+            db,
+            [
+                "get_user_profile",
+                "fetch_user_profile",
+            ],
+            data,
+        )
+        return {"success": True, "data": _safe_dict(result).get("data", {})}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
 @router.post("/profile")
 async def save_profile(payload: ProfileSaveRequest, user_email: str = Depends(get_current_user)):
     try:

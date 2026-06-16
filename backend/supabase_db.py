@@ -146,6 +146,25 @@ def _mock_analytics():
         ]
     }
 
+def get_user_profile(payload: dict) -> dict:
+    user_email = payload.get("user_email")
+    if not user_email:
+        return {"status": "error", "message": "user_email is required"}
+        
+    if not supabase:
+        print("Mock DB: Getting user profile for", user_email)
+        return {"status": "success", "data": {}}
+        
+    try:
+        res = supabase.table('user_profiles').select("linkedin_url, indeed_url, naukri_url, profile_picture").eq("user_email", user_email).execute()
+        data = getattr(res, "data", []) or []
+        if len(data) > 0:
+            return {"status": "success", "data": data[0]}
+        return {"status": "success", "data": {}}
+    except Exception as e:
+        print("Error getting user profile:", e)
+        return {"status": "error", "message": str(e)}
+
 def save_user_profile(payload: dict) -> dict:
     user_email = payload.get("user_email")
     if not user_email:

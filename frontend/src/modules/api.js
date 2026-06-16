@@ -70,6 +70,10 @@ export const api = {
   reportScam: (payload, token) =>
     request('/report', { method: 'POST', body: payload, token }),
 
+  /** GET /profile */
+  getProfile: (token) =>
+    request('/profile', { method: 'GET', token }),
+
   /** POST /profile */
   saveProfile: (payload, token) =>
     request('/profile', { method: 'POST', body: payload, token }),
