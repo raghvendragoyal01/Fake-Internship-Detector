@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+2: <html lang="en">
+3: <head>
+4:   <meta charset="UTF-8" />
+5:   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+6:   <link rel="preconnect" href="https://fonts.googleapis.com">
+7:   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+8:   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:opsz,wght@6..72,200..800&display=swap" rel="stylesheet">
+9:   <script src="https://cdn.tailwindcss.com"></script>
+10:   <link rel="stylesheet" href="style.css">
+11: </head>
+12: <body class="text-slate-100 min-h-screen flex flex-col cursor-none">
+13:   <div id="custom-cursor" class="custom-cursor hidden md:block"></div>
+14:   
+15:   <!-- Landing Page -->
+16:   <section id="landing-view" class="w-full flex-1 flex flex-col transition-opacity duration-700">
+17:     <canvas id="particleCanvas"></canvas>
+18:     
+19:     <!-- Hero Section -->
+20:     <div class="relative min-h-screen flex flex-col items-center justify-center p-6 overflow-hidden w-full">
+21:       <!-- Floating Job Portal Cards -->
+22:       <div class="float-card delay-1 hidden md:flex" style="top: 20%; left: 10%;">
+23:         <div class="text-3xl">💼</div>
+24:         <div>
+25:           <div class="text-xs text-sky-400 font-bold uppercase tracking-wider">Monitoring</div>
+26:           <div class="font-semibold font-mono">LinkedIn</div>
+27:         </div>
+28:       </div>
+29:       
+30:       <div class="float-card delay-2 hidden md:fl
+<truncated 5373 bytes>
+div>
+98:         <div class="glow-card h-96 reveal flex items-center justify-center p-8 interactive-hover" style="transition-delay: 200ms;">
+99:           <div class="w-full h-full rounded-xl bg-slate-950/50 border border-white/5 relative overflow-hidden flex flex-col justify-between p-6">
+100:             <div class="w-full h-8 bg-slate-900 rounded flex items-center px-4 gap-2"><div class="w-3 h-3 rounded-full bg-rose-500"></div><div class="w-3 h-3 rounded-full bg-amber-500"></div><div class="w-3 h-3 rounded-full bg-emerald-500"></div></div>
+101:             <div class="space-y-3">
+102:               <div class="h-4 bg-slate-800 rounded w-3/4 animate-pulse"></div>
+103:               <div class="h-4 bg-slate-800 rounded w-full animate-pulse" style="animation-delay: 100ms"></div>
+104:               <div class="h-4 bg-slate-800 rounded w-5/6 animate-pulse" style="animation-delay: 200ms"></div>
+105:             </div>
+106:             <div class="p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-sm font-mono flex items-center gap-2">
+107:               <span class="w-2 h-2 rounded-full bg-rose-500"></span> [ALERT] Suspicious advance-fee pattern detected
+108:             </div>
+109:           </div>
+110:         </div>
+111:       </div>
+112:     </div>
+113:     
+114:     <!-- Footer CTA -->
+115:     <div class="w-full max-w-4xl mx-auto px-6 py-32 z-10 relative text-center reveal">
+116:       <h2 class="text-4xl lg:text-6xl font-bold mb-8">Ready to secure your job search?</h2>
+117:       <button onclick="toggleAuthModal(true)" class="btn-hover px-12 py-5 rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 text-white font-bold text-xl shadow-[0_0_40px_rgba(56,189,248,0.4)] tracking-wide uppercase transition-all hover:scale-105 interactive-hover">Join the Network</button>
+118:     </div>
+119:   </section>
+120: 
+121:   
+122:   <script src="auth.js"></script>
+123: </body>
+124: </html>

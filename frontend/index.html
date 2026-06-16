@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ScamShield — AI-Powered Job Fraud Detection</title>
+  <meta name="description"
+    content="Protect your career with real-time global telemetry and advanced ML inference. Catch fake job postings and scam recruiters instantly." />
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Newsreader:opsz,wght@6..72,200..800&display=swap"
+    rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════════════════════════════════════════
+       CUSTOM CURSOR (desktop only)
+       ═══════════════════════════════════════════════════════ -->
+  <div id="custom-cursor" class="custom-cursor"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       LANDING PAGE
+       ═══════════════════════════════════════════════════════ -->
+  <section id="landing-view" class="landing-view">
+    <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <div class="hero-wrapper">
+      <!-- Floating cards (desktop decoration) -->
+      <div class="float-card float-card--left float-delay-1">
+        <div class="float-card__icon">💼</div>
+        <div>
+          <div class="float-card__label">Monitoring</div>
+          <div class="float-card__value">LinkedIn</div>
+        </div>
+      </div>
+
+      <div class="float-card float-card--right float-delay-2">
+        <div class="float-card__icon">🔍</div>
+        <div>
+          <div class="float-card__label">Monitoring</div>
+          <div class="float-card__value">Indeed</div>
+        </div>
+      </div>
+
+      <div class="float-card float-card--bottom float-delay-3">
+        <div class="float-card__icon">🏢</div>
+        <div>
+          <div class="float-card__label">Monitoring</div>
+          <div class="float-card__value">Glassdoor</div>
+        </div>
+      </div>
+
+      <!-- Hero Content -->
+      <div class="hero-content">
+        <div class="hero-logo" id="heroLogo">S</div>
+        <h1 class="hero-title glowing-text">
+          Job Fraud Prevention,<br />
+          <span class="hero-title--accent">Elevated.</span>
+        </h1>
+        <p class="hero-subtitle">
+          Protect your career with real-time global telemetry and advanced ML
+          inference. Catch fake job postings and scam recruiters instantly.
+        </p>
+        <button type="button" id="accessPortalBtn" class="btn btn--primary btn--lg hero-cta">
+          Access Portal
+        </button>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator">
+        <span class="scroll-indicator__text">Explore</span>
+        <svg class="scroll-indicator__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="section-container">
+      <div class="section-header reveal">
+        <h2 class="section-title">Platform Intelligence</h2>
+        <p class="section-description">
+          Our models continuously learn from thousands of endpoints to protect
+          the global workforce.
+        </p>
+      </div>
+      <div class="stats-grid">
+        <div class="glow-card stat-card reveal interactive-hover">
+          <div class="stat-card__label stat-card__label--sky">Jobs Scanned</div>
+          <div class="stat-card__value stat-counter" data-target="15420">0</div>
+          <div class="stat-card__desc">Real-time processing across 6 major portals</div>
+        </div>
+        <div class="glow-card stat-card reveal interactive-hover" style="transition-delay: 100ms">
+          <div class="stat-card__label stat-card__label--emerald">Scams Blocked</div>
+          <div class="stat-card__value stat-counter" data-target="4892">0</div>
+          <div class="stat-card__desc">Identified by advanced NLP heuristics</div>
+        </div>
+        <div class="glow-card stat-card reveal interactive-hover" style="transition-delay: 200ms">
+          <div class="stat-card__label stat-card__label--indigo">Active Users</div>
+          <div class="stat-card__value stat-counter" data-target="2104">0</div>
+          <div class="stat-card__desc">Professionals protected globally</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Section -->
+    <div class="section-container">
+      <div class="feature-grid">
+        <div class="reveal">
+          <div class="feature-badge">Deep Learning</div>
+          <h2 class="feature-title">Identify sophisticated scams with NLP.</h2>
+          <p class="feature-desc">
+            Fraudulent job postings are designed to look legitimate. ScamShield
+            uses advanced Natural Language Processing to detect subtle anomalies
+            in job descriptions, compensation structures, and recruiter behavior
+            that humans miss.
+          </p>
+          <ul class="feature-list">
+            <li class="feature-list__item">
+              <span class="feature-list__check">✓</span> 99.4% detection accuracy on known scam vectors
+            </li>
+            <li class="feature-list__item">
+              <span class="feature-list__check">✓</span> Real-time parsing of formatting anomalies
+            </li>
+            <li class="feature-list__item">
+              <span class="feature-list__check">✓</span> Phishing link and credential-harvesting detection
+            </li>
+          </ul>
+        </div>
+        <div class="glow-card feature-terminal reveal interactive-hover" style="transition-delay: 200ms">
+          <div class="terminal-window">
+            <div class="terminal-bar">
+              <div class="terminal-dot terminal-dot--red"></div>
+              <div class="terminal-dot terminal-dot--yellow"></div>
+              <div class="terminal-dot terminal-dot--green"></div>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line terminal-line--1"></div>
+              <div class="terminal-line terminal-line--2"></div>
+              <div class="terminal-line terminal-line--3"></div>
+            </div>
+            <div class="terminal-alert">
+              <span class="terminal-alert__dot"></span>
+              [ALERT] Suspicious advance-fee pattern detected
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section reveal">
+      <h2 class="cta-title">Ready to secure your job search?</h2>
+      <button type="button" id="ctaJoinBtn" class="btn btn--gradient btn--xl">
+        Join the Network
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       APPLICATION PORTAL (Dashboard)
+       ═══════════════════════════════════════════════════════ -->
+  <div id="app-container" class="app-container app-container--hidden">
+    <canvas id="portalParticleCanvas" class="particle-canvas"></canvas>
+
+    <div class="app-layout">
+      <!-- Sidebar (desktop) -->
+      <aside class="sidebar glass">
+        <div class="sidebar__brand">
+          <div class="sidebar__logo">S</div>
+          <div>
+            <div class="sidebar__name">ScamShield</div>
+            <div class="sidebar__tagline">Job fraud detection suite</div>
+          </div>
+        </div>
+
+        <nav class="sidebar__nav">
+          <div class="sidebar__nav-label">Main Menu</div>
+          <button class="nav-btn sidebar-active" data-view="dashboard">Dashboard</button>
+          <button class="nav-btn" data-view="profile-view">Profile & ATS</button>
+          <button class="nav-btn" data-view="scam-checker">Scam Checker</button>
+          <button class="nav-btn" data-view="recruiter-verification">Recruiter Verification</button>
+          <button class="nav-btn" data-view="report-form">Report Scam</button>
+        </nav>
+
+        <div class="sidebar__footer">
+          <div id="authContainerSidebar">
+            <button id="authBtn" class="btn btn--primary btn--full">Sign In</button>
+            <div id="userInfoSidebar" class="sidebar__user-info hidden">
+              <div class="sidebar__user-label">Logged in as</div>
+              <div id="userNameDisplay" class="sidebar__user-name"></div>
+              <button id="logoutBtn" class="sidebar__logout-btn">Logout</button>
+            </div>
+          </div>
+          <div class="sidebar__tech-info">
+            Secure API integration layer<br />FastAPI, Supabase, ML, NLP
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="main-area">
+        <!-- Mobile Header -->
+        <header class="mobile-header glass">
+          <div>
+            <div class="mobile-header__name">ScamShield</div>
+            <div class="mobile-header__tagline">Job fraud detection suite</div>
+          </div>
+          <button id="mobileMenuBtn" class="btn btn--outline btn--sm">Menu</button>
+        </header>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu" style="display: none">
+          <div class="mobile-menu__inner glass">
+            <button class="nav-btn-mobile sidebar-active" data-view="dashboard">Dashboard</button>
+            <button class="nav-btn-mobile" data-view="profile-view">Profile & ATS</button>
+            <button class="nav-btn-mobile" data-view="scam-checker">Scam Checker</button>
+            <button class="nav-btn-mobile" data-view="recruiter-verification">Recruiter Verification</button>
+            <button class="nav-btn-mobile" data-view="report-form">Report Scam</button>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <main class="content-main">
+          <!-- Page Header -->
+          <section class="page-header glass">
+            <div>
+              <h1 class="page-header__title">Active Telemetry Dashboard</h1>
+              <p class="page-header__desc">
+                Global tracking of suspicious opportunities and verified
+                recruiters.
+              </p>
+            </div>
+            <div class="page-header__actions">
+              <button class="nav-cta btn btn--primary" data-view="scam-checker">Launch Scanner</button>
+              <button class="nav-cta btn btn--outline" data-view="report-form">Submit Report</button>
+            </div>
+          </section>
+
+          <!-- ═══ DASHBOARD VIEW ═══ -->
+          <section id="dashboard-view" class="view-section">
+            <div class="dashboard-stats-grid">
+              <div class="glass dashboard-stat-card animate-in" style="--delay: 0">
+                <div class="dashboard-stat-card__label">Total jobs analyzed</div>
+                <div id="stat-total-jobs" class="dashboard-stat-card__value">0</div>
+              </div>
+              <div class="glass dashboard-stat-card animate-in" style="--delay: 1">
+                <div class="dashboard-stat-card__label">Scams detected</div>
+                <div id="stat-scams-detected" class="dashboard-stat-card__value">0</div>
+              </div>
+              <div class="glass dashboard-stat-card animate-in" style="--delay: 2">
+                <div class="dashboard-stat-card__label">Verified recruiters</div>
+                <div id="stat-verified-recruiters" class="dashboard-stat-card__value">0</div>
+              </div>
+              <div class="glass dashboard-stat-card animate-in" style="--delay: 3">
+                <div class="dashboard-stat-card__label">Total reports</div>
+                <div id="stat-total-reports" class="dashboard-stat-card__value">0</div>
+              </div>
+            </div>
+
+            <div>
+              <h2 class="telemetry-title">Active Telemetry: Job Portals</h2>
+              <div class="portals-grid">
+                <div class="glass portal-card interactive-hover">
+                  <svg class="portal-card__icon" viewBox="0 0 24 24" fill="#0A66C2">
+                    <path
+                      d="M20.447 20.452H16.92V14.88c0-1.328-.024-3.037-1.85-3.037-1.85 0-2.133 1.445-2.133 2.938v5.671H9.414V9h3.385v1.561h.047c.471-.89 1.62-1.83 3.333-1.83 3.568 0 4.228 2.348 4.228 5.4v6.321zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zM7.098 20.452H3.573V9h3.525v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                  <div class="portal-card__name">LinkedIn</div>
+                  <div class="portal-card__status">
+                    <span class="portal-card__dot"></span>Live sync
+                  </div>
+                </div>
+                <div class="glass portal-card interactive-hover">
+                  <svg class="portal-card__icon" viewBox="0 0 24 24" fill="#2164f3">
+                    <path
+                      d="M11.5 1C5.1 1 0 5.1 0 10.5c0 3.6 2.3 6.7 5.6 8.3l-1.2 4.3 4.7-3.1c.8.1 1.6.2 2.4.2 6.4 0 11.5-4.1 11.5-9.5S17.9 1 11.5 1z" />
+                  </svg>
+                  <div class="portal-card__name">Indeed</div>
+                  <div class="portal-card__status">
+                    <span class="portal-card__dot"></span>Live sync
+                  </div>
+                </div>
+                <div class="glass portal-card interactive-hover">
+                  <svg class="portal-card__icon" viewBox="0 0 24 24" fill="#0CAA41">
+                    <path d="M12.3 19V5h-1v14h1zm6.2 0V9.5h-1V19h1zm-12.4 0V9.5h-1V19h1z" />
+                  </svg>
+                  <div class="portal-card__name">Glassdoor</div>
+                  <div class="portal-card__status">
+                    <span class="portal-card__dot"></span>Live sync
+                  </div>
+                </div>
+                <div class="glass portal-card interactive-hover">
+                  <div class="portal-card__emoji">🚀</div>
+                  <div class="portal-card__name">Wellfound</div>
+                  <div class="portal-card__status">
+                    <span class="portal-card__dot"></span>Live sync
+                  </div>
+                </div>
+                <div class="glass portal-card interactive-hover">
+                  <div class="portal-card__emoji">👔</div>
+                  <div class="portal-card__name">Naukri</div>
+                  <div class="portal-card__status">
+                    <span class="portal-card__dot"></span>Live sync
+                  </div>
+                </div>
+                <div class="glass portal-card interactive-hover">
+                  <div class="portal-card__emoji">👾</div>
+                  <div class="portal-card__name">Monster</div>
+                  <div class="portal-card__status">
+                    <span class="portal-card__dot"></span>Live sync
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ SCAM CHECKER VIEW ═══ -->
+          <section id="scam-checker-view" class="view-section view-hidden">
+            <div class="glass panel">
+              <div class="panel__header">
+                <h2 class="panel__title">Scam Checker</h2>
+                <p class="panel__desc">Paste the job details and verify the opportunity before applying.</p>
+              </div>
+              <form id="scamCheckerForm" class="form-grid">
+                <div class="form-group form-group--full">
+                  <label class="form-label" for="jobDescription">Job Description</label>
+                  <textarea id="jobDescription" required rows="7" class="form-input form-textarea"
+                    placeholder="Paste the full job description here..."></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="jobUrl">Job URL</label>
+                  <input id="jobUrl" type="url" required class="form-input" placeholder="https://..." />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="recruiterEmail">Recruiter Email</label>
+                  <input id="recruiterEmail" type="email" required class="form-input"
+                    placeholder="hr@company.com" />
+                </div>
+                <div class="form-group form-group--full">
+                  <button id="analyzeBtn" type="submit" class="btn btn--primary btn--with-icon">
+                    <span>Analyze Posting</span>
+                  </button>
+                </div>
+              </form>
+
+              <div id="analysisLoading" class="loading-indicator hidden">
+                <div class="spinner"></div>
+                <span>Analyzing scam signals...</span>
+              </div>
+
+              <div id="analysisResult" class="result-panel hidden">
+                <div class="glass result-card">
+                  <div class="result-card__header">
+                    <div>
+                      <div class="result-card__label">Scam score</div>
+                      <div id="resultScore" class="result-card__score">0</div>
+                    </div>
+                    <div id="resultRiskBadge" class="badge"></div>
+                  </div>
+                  <div class="result-details">
+                    <div class="result-detail-box">
+                      <div class="result-detail-box__label">Suspicious keywords</div>
+                      <div id="resultKeywords" class="result-detail-box__value"></div>
+                    </div>
+                    <div class="result-detail-box">
+                      <div class="result-detail-box__label">Recommendation</div>
+                      <div id="resultRecommendation" class="result-detail-box__value"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ RECRUITER VERIFICATION VIEW ═══ -->
+          <section id="recruiter-verification-view" class="view-section view-hidden">
+            <div class="glass panel">
+              <h2 class="panel__title">Recruiter Verification</h2>
+              <p class="panel__desc">Search by recruiter email or company domain to see the trust status.</p>
+              <div class="verify-input-row">
+                <input id="verificationQuery" type="text" class="form-input form-input--mono"
+                  placeholder="Recruiter email or domain" />
+                <button id="verifyRecruiterBtn" class="btn btn--primary">Verify</button>
+              </div>
+              <div id="verificationResult" class="hidden">
+                <div id="verificationCard" class="glass result-card">
+                  <div class="result-card__header">
+                    <div>
+                      <div id="verificationTitle" class="result-card__name">Recruiter</div>
+                      <div id="verificationMeta" class="result-card__meta"></div>
+                    </div>
+                    <span id="verificationBadge" class="badge"></span>
+                  </div>
+                  <div class="result-details result-details--3col">
+                    <div class="result-detail-box">
+                      <div class="result-detail-box__label">Previous reports</div>
+                      <div id="verificationReports" class="result-detail-box__value result-detail-box__value--lg">0
+                      </div>
+                    </div>
+                    <div class="result-detail-box">
+                      <div class="result-detail-box__label">Trust score</div>
+                      <div id="verificationTrust" class="result-detail-box__value result-detail-box__value--lg">—</div>
+                    </div>
+                    <div class="result-detail-box">
+                      <div class="result-detail-box__label">Reason</div>
+                      <div id="verificationReason" class="result-detail-box__value">—</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ PROFILE & ATS VIEW ═══ -->
+          <section id="profile-view" class="view-section view-hidden">
+            <div class="glass panel">
+              <h2 class="panel__title panel__title--serif">Your Profile & Identity</h2>
+              <p class="panel__desc">
+                Connect your professional accounts to enhance our scam detection
+                tailored for you.
+              </p>
+              <form id="profileForm" class="form-grid form-grid--profile">
+                <div class="profile-avatar-section">
+                  <div class="profile-avatar">
+                    <input type="file" id="profilePhotoUpload" class="profile-avatar__input" accept="image/*" />
+                    <img id="profilePhotoPreview" src="" class="profile-avatar__preview hidden" />
+                    <div class="profile-avatar__placeholder">
+                      <svg class="profile-avatar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span class="profile-avatar__text">Photo</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="profile-avatar__title">Avatar</div>
+                    <div class="profile-avatar__hint">JPG, PNG up to 2MB.</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="profileLinkedin">LinkedIn URL</label>
+                  <input id="profileLinkedin" type="url" class="form-input form-input--mono"
+                    placeholder="https://linkedin.com/in/..." />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="profileIndeed">Indeed Profile URL</label>
+                  <input id="profileIndeed" type="url" class="form-input form-input--mono"
+                    placeholder="https://indeed.com/..." />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="profileNaukri">Naukri Profile URL</label>
+                  <input id="profileNaukri" type="url" class="form-input form-input--mono"
+                    placeholder="https://naukri.com/..." />
+                </div>
+                <div class="form-group form-group--end">
+                  <button type="submit" id="saveProfileBtn" class="btn btn--primary btn--full">Save Links</button>
+                </div>
+                <div id="profileStatus" class="status-message hidden"></div>
+              </form>
+            </div>
+
+            <!-- ATS Score Checker -->
+            <div class="glass panel">
+              <div class="ats-header">
+                <div class="ats-header__icon">A</div>
+                <div>
+                  <h2 class="panel__title panel__title--serif">ATS Score Checker</h2>
+                  <p class="panel__desc">
+                    Upload your resume to evaluate how well Applicant Tracking
+                    Systems can parse it.
+                  </p>
+                </div>
+              </div>
+
+              <div class="ats-grid">
+                <div id="resumeUploadBox" class="upload-box interactive-hover">
+                  <input type="file" id="resumeUpload" class="upload-box__input" accept=".pdf,.doc,.docx" />
+                  <svg class="upload-box__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <div class="upload-box__title">Upload your Resume</div>
+                  <p class="upload-box__hint">PDF, DOCX up to 5MB</p>
+                  <div id="uploadFileName" class="upload-box__filename hidden"></div>
+                  <div id="atsLoading" class="upload-box__loading hidden">
+                    <div class="spinner"></div>
+                    <span>Parsing document...</span>
+                  </div>
+                </div>
+
+                <div id="atsResultPanel" class="glass ats-result hidden">
+                  <div class="ats-result__header">
+                    <h3 class="ats-result__title">Analysis Results</h3>
+                    <div class="ats-result__circle">
+                      <span id="atsScoreCircle">0</span>
+                    </div>
+                  </div>
+                  <div class="ats-bars">
+                    <div class="ats-bar">
+                      <div class="ats-bar__header">
+                        <span>Formatting & Parsing</span>
+                        <span id="atsFmtVal">0%</span>
+                      </div>
+                      <div class="ats-bar__track">
+                        <div id="atsBarFormat" class="ats-bar__fill ats-bar__fill--emerald" style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <div class="ats-bar">
+                      <div class="ats-bar__header">
+                        <span>Keyword Match</span>
+                        <span id="atsKeyVal">0%</span>
+                      </div>
+                      <div class="ats-bar__track">
+                        <div id="atsBarKeywords" class="ats-bar__fill ats-bar__fill--amber" style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <div class="ats-bar">
+                      <div class="ats-bar__header">
+                        <span>Impact Metrics</span>
+                        <span id="atsImpVal">0%</span>
+                      </div>
+                      <div class="ats-bar__track">
+                        <div id="atsBarImpact" class="ats-bar__fill ats-bar__fill--sky" style="width: 0%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ats-feedback">
+                    <span class="ats-feedback__label">AI Feedback:</span>
+                    <span id="atsFeedbackText" class="ats-feedback__text"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ═══ REPORT SCAM VIEW ═══ -->
+          <section id="report-form-view" class="view-section view-hidden">
+            <div class="glass panel">
+              <h2 class="panel__title">Report Scam</h2>
+              <p class="panel__desc">Submit suspicious postings to help improve the fraud database.</p>
+              <form id="reportForm" class="form-grid">
+                <div class="form-group">
+                  <label class="form-label" for="reportCompanyName">Company Name</label>
+                  <input id="reportCompanyName" type="text" required class="form-input" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="reportJobUrl">Job URL</label>
+                  <input id="reportJobUrl" type="url" required class="form-input" placeholder="https://..." />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="reportScamType">Scam Type</label>
+                  <select id="reportScamType" required class="form-input form-select">
+                    <option value="">Select a scam type</option>
+                    <option value="registration_fee">Registration Fee</option>
+                    <option value="personal_information">Personal Information Theft</option>
+                    <option value="fake_company">Fake Company</option>
+                    <option value="salary_anomaly">Salary Anomaly</option>
+                    <option value="phishing">Phishing</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group"></div>
+                <div class="form-group form-group--full">
+                  <label class="form-label" for="reportDescription">Description</label>
+                  <textarea id="reportDescription" required rows="6" class="form-input form-textarea"
+                    placeholder="Describe the scam in detail..."></textarea>
+                </div>
+                <div class="form-group form-group--full">
+                  <button type="submit" class="btn btn--primary btn--with-icon">
+                    <span>Submit Report</span>
+                  </button>
+                </div>
+                <div id="reportStatus" class="status-message hidden"></div>
+              </form>
+            </div>
+          </section>
+
+          <!-- Footer -->
+          <footer class="app-footer">
+            <div class="app-footer__links">
+              <a href="#" class="app-footer__link">Privacy Policy</a>
+              <a href="#" class="app-footer__link">Contact Us</a>
+              <a href="#" class="app-footer__link">About Us</a>
+              <a href="#" class="app-footer__link">
+                <svg class="app-footer__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Terms & Conditions
+              </a>
+            </div>
+            <p class="app-footer__brand">ScamShield &copy; 2026</p>
+            <p class="app-footer__tagline">Ensuring transparency in the global job market.</p>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       AUTH MODAL
+       ═══════════════════════════════════════════════════════ -->
+  <div id="authModal" class="modal-overlay hidden">
+    <div class="modal glass">
+      <button type="button" id="closeAuthModal" class="modal__close">&times;</button>
+      <div class="modal__brand">
+        <div class="modal__logo">S</div>
+        <h2 id="authTitle" class="modal__title">Welcome Back</h2>
+        <p id="authSubtitle" class="modal__subtitle">Sign in to your ScamShield account</p>
+      </div>
+
+      <form id="authForm" class="modal__form">
+        <div id="authNameGroup" class="form-group hidden">
+          <label class="form-label" for="authName">Full Name</label>
+          <input id="authName" type="text" class="form-input" placeholder="John Doe" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="authEmail">Email</label>
+          <input id="authEmail" type="email" required class="form-input" placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="authPassword">Password</label>
+          <input id="authPassword" type="password" required class="form-input" placeholder="••••••••" />
+        </div>
+
+        <div id="authError" class="auth-error hidden"></div>
+
+        <button type="submit" id="authSubmitBtn" class="btn btn--primary btn--full btn--glow">
+          <span>Sign In</span>
+        </button>
+      </form>
+
+      <div class="modal__toggle">
+        <span id="authToggleText">Don't have an account?</span>
+        <button type="button" id="authToggleBtn" class="modal__toggle-btn">Sign up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       APPLICATION SCRIPT
+       ═══════════════════════════════════════════════════════ -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

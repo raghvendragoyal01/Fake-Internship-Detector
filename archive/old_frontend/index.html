@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:opsz,wght@6..72,200..800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="text-slate-100 min-h-screen flex flex-col cursor-none">
+  <div id="custom-cursor" class="custom-cursor hidden md:block"></div>
+
+  <section id="landing-view" class="w-full flex-1 flex flex-col transition-opacity duration-700">
+    <canvas id="particleCanvas"></canvas>
+
+    <div class="relative min-h-screen flex flex-col items-center justify-center p-6 overflow-hidden w-full">
+      <div class="float-card delay-1 hidden md:flex" style="top: 20%; left: 10%;">
+        <div class="text-3xl">💼</div>
+        <div>
+          <div class="text-xs text-sky-400 font-bold uppercase tracking-wider">Monitoring</div>
+          <div class="font-semibold font-mono">LinkedIn</div>
+        </div>
+      </div>
+
+      <div class="float-card delay-2 hidden md:flex" style="top: 60%; right: 10%;">
+        <div class="text-3xl">🔍</div>
+        <div>
+          <div class="text-xs text-sky-400 font-bold uppercase tracking-wider">Monitoring</div>
+          <div class="font-semibold font-mono">Indeed</div>
+        </div>
+      </div>
+
+      <div class="float-card hidden md:flex" style="bottom: 20%; left: 15%;">
+        <div class="text-3xl">🏢</div>
+        <div>
+          <div class="text-xs text-sky-400 font-bold uppercase tracking-wider">Monitoring</div>
+          <div class="font-semibold font-mono">Glassdoor</div>
+        </div>
+      </div>
+
+      <div class="text-center max-w-4xl landing-content relative z-10 mt-[-5vh]">
+        <div
+          class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-sky-400 to-indigo-500 flex items-center justify-center font-black text-white text-4xl mb-8 shadow-[0_0_40px_rgba(56,189,248,0.4)] transition-transform hover:scale-110 hover:rotate-3 duration-300">
+          S</div>
+        <h1 class="text-5xl lg:text-7xl font-bold tracking-tight mb-6 glowing-text">Job Fraud Prevention, <br /> <span
+            class="text-sky-400">Elevated.</span></h1>
+        <p class="text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">Protect your career with
+          real-time global telemetry and advanced ML inference. Catch fake job postings and scam recruiters instantly.
+        </p>
+        <button type="button" id="accessPortalBtn"
+          class="btn-hover px-10 py-4 rounded-full bg-white text-[#020813] font-bold text-lg shadow-[0_0_30px_rgba(255,255,255,0.3)] tracking-wide uppercase transition-all hover:scale-105 interactive-hover cursor-pointer"
+          style="position: relative; z-index: 50;">Access Portal</button>
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-50 animate-bounce">
+        <span class="text-xs uppercase tracking-widest mb-2 font-mono text-sky-400">Explore</span>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="w-full max-w-6xl mx-auto px-6 py-24 z-10 relative">
+      <div class="text-center mb-16 reveal">
+        <h2 class="text-3xl lg:text-5xl font-bold mb-4">Platform Intelligence</h2>
+        <p class="text-slate-400 max-w-2xl mx-auto">Our models continuously learn from thousands of endpoints to protect
+          the global workforce.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="glow-card p-8 text-center reveal interactive-hover">
+          <div class="text-sky-400 mb-2 font-mono uppercase tracking-widest text-sm">Jobs Scanned</div>
+          <div class="text-5xl font-black mb-2 stat-counter" data-target="15420">0</div>
+          <div class="text-slate-400 text-sm">Real-time processing across 6 major portals</div>
+        </div>
+        <div class="glow-card p-8 text-center reveal interactive-hover" style="transition-delay: 100ms;">
+          <div class="text-emerald-400 mb-2 font-mono uppercase tracking-widest text-sm">Scams Blocked</div>
+          <div class="text-5xl font-black mb-2 stat-counter" data-target="4892">0</div>
+          <div class="text-slate-400 text-sm">Identified by advanced NLP heuristics</div>
+        </div>
+        <div class="glow-card p-8 text-center reveal interactive-hover" style="transition-delay: 200ms;">
+          <div class="text-indigo-400 mb-2 font-mono uppercase tracking-widest text-sm">Active Users</div>
+          <div class="text-5xl font-black mb-2 stat-counter" data-target="2104">0</div>
+          <div class="text-slate-400 text-sm">Professionals protected globally</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full max-w-6xl mx-auto px-6 py-24 z-10 relative">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal">
+          <div
+            class="inline-block px-4 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm font-mono tracking-widest mb-6 uppercase">
+            Deep Learning</div>
+          <h2 class="text-4xl lg:text-5xl font-bold mb-6 leading-tight">Identify sophisticated scams with NLP.</h2>
+          <p class="text-lg text-slate-400 mb-6 leading-relaxed">Fraudulent job postings are designed to look
+            legitimate. ScamShield uses advanced Natural Language Processing to detect subtle anomalies in job
+            descriptions, compensation structures, and recruiter behavior that humans miss.</p>
+          <ul class="space-y-4">
+            <li class="flex items-center gap-3"><span class="text-emerald-400">✓</span> 99.4% detection accuracy on
+              known scam vectors</li>
+            <li class="flex items-center gap-3"><span class="text-emerald-400">✓</span> Real-time parsing of formatting
+              anomalies</li>
+            <li class="flex items-center gap-3"><span class="text-emerald-400">✓</span> Phishing link and
+              credential-harvesting detection</li>
+          </ul>
+        </div>
+        <div class="glow-card h-96 reveal flex items-center justify-center p-8 interactive-hover"
+          style="transition-delay: 200ms;">
+          <div
+            class="w-full h-full rounded-xl bg-slate-950/50 border border-white/5 relative overflow-hidden flex flex-col justify-between p-6">
+            <div class="w-full h-8 bg-slate-900 rounded flex items-center px-4 gap-2">
+              <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+              <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+              <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+            </div>
+            <div class="space-y-3">
+              <div class="h-4 bg-slate-800 rounded w-3/4 animate-pulse"></div>
+              <div class="h-4 bg-slate-800 rounded w-full animate-pulse" style="animation-delay: 100ms"></div>
+              <div class="h-4 bg-slate-800 rounded w-5/6 animate-pulse" style="animation-delay: 200ms"></div>
+            </div>
+            <div
+              class="p-4 bg-rose-500/10 border border-rose-500/20 rounded-lg text-rose-400 text-sm font-mono flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> [ALERT] Suspicious advance-fee pattern detected
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full max-w-4xl mx-auto px-6 py-32 z-10 relative text-center reveal">
+      <h2 class="text-4xl lg:text-6xl font-bold mb-8">Ready to secure your job search?</h2>
+      <button onclick="toggleAuthModal(true)"
+        class="btn-hover px-12 py-5 rounded-full bg-gradient-to-r from-sky-400 to-indigo-500 text-white font-bold text-xl shadow-[0_0_40px_rgba(56,189,248,0.4)] tracking-wide uppercase transition-all hover:scale-105 interactive-hover">Join
+        the Network</button>
+    </div>
+  </section>
+
+  <div id="app-container" class="min-h-screen w-full flex view-hidden relative">
+    <canvas id="portalParticleCanvas"></canvas>
+    <div class="flex w-full portal-content">
+      <aside class="w-72 hidden lg:flex flex-col px-5 py-6 glass border-r border-white/5">
+        <div class="flex items-center gap-3 mb-8">
+          <div
+            class="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400 flex items-center justify-center font-black text-slate-950">
+            S</div>
+          <div>
+            <div class="text-lg font-semibold tracking-tight">ScamShield</div>
+            <div class="text-xs text-slate-400">Job fraud detection suite</div>
+          </div>
+        </div>
+        <nav class="space-y-2">
+          <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3 px-3 mt-2">Main Menu</div>
+          <button class="nav-btn w-full text-left px-4 py-3 rounded-2xl soft-border sidebar-active"
+            data-view="dashboard">Dashboard</button>
+          <button
+            class="nav-btn w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+            data-view="profile-view">Profile & ATS</button>
+          <button
+            class="nav-btn w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+            data-view="scam-checker">Scam Checker</button>
+          <button
+            class="nav-btn w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+            data-view="recruiter-verification">Recruiter Verification</button>
+          <button
+            class="nav-btn w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+            data-view="report-form">Report Scam</button>
+        </nav>
+        <div class="mt-auto pt-6 border-t border-slate-800/80">
+          <div id="authContainerSidebar" class="mb-4">
+            <button id="authBtn" class="w-full btn-hover bg-white text-black font-semibold py-3 rounded-2xl">Sign
+              In</button>
+            <div id="userInfoSidebar" class="hidden text-sm">
+              <div class="text-slate-400">Logged in as</div>
+              <div id="userNameDisplay" class="font-semibold text-sky-400 truncate"></div>
+              <button id="logoutBtn" class="mt-2 text-xs text-rose-400 hover:text-rose-300">Logout</button>
+            </div>
+          </div>
+          <div class="text-xs text-slate-500 leading-6">Secure API integration layer<br />FastAPI, Supabase, ML, NLP
+          </div>
+        </div>
+      </aside>
+
+      <div class="flex-1 flex flex-col">
+        <header class="lg:hidden px-4 py-4 glass border-b border-slate-800/80 flex items-center justify-between">
+          <div>
+            <div class="font-semibold">ScamShield</div>
+            <div class="text-xs text-slate-400">Job fraud detection suite</div>
+          </div>
+          <button id="mobileMenuBtn" class="px-3 py-2 rounded-xl soft-border">Menu</button>
+        </header>
+
+        <div class="lg:hidden px-4 pt-3" id="mobileMenu" style="display:none;">
+          <div class="glass rounded-3xl p-3 space-y-2">
+            <button class="nav-btn-mobile w-full text-left px-4 py-3 rounded-2xl soft-border sidebar-active"
+              data-view="dashboard">Dashboard</button>
+            <button
+              class="nav-btn-mobile w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+              data-view="profile-view">Profile & ATS</button>
+            <button
+              class="nav-btn-mobile w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+              data-view="scam-checker">Scam Checker</button>
+            <button
+              class="nav-btn-mobile w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+              data-view="recruiter-verification">Recruiter Verification</button>
+            <button
+              class="nav-btn-mobile w-full text-left px-4 py-3 rounded-2xl soft-border text-slate-300 hover:text-white hover:bg-white/5"
+              data-view="report-form">Report Scam</button>
+          </div>
+        </div>
+
+        <main class="flex-1 p-4 lg:p-8 space-y-6">
+          <section class="glass rounded-[28px] p-6 lg:p-8">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+              <div>
+                <h1 class="text-3xl lg:text-5xl font-bold tracking-tight">Active Telemetry Dashboard</h1>
+                <p class="mt-3 text-slate-400 max-w-3xl leading-relaxed">Global tracking of suspicious opportunities and
+                  verified recruiters.</p>
+              </div>
+              <div class="flex gap-3 shrink-0">
+                <button class="nav-cta btn-hover px-6 py-3 rounded-2xl bg-white text-black font-semibold"
+                  data-view="scam-checker">Launch Scanner</button>
+                <button
+                  class="nav-cta px-6 py-3 rounded-2xl soft-border hover:bg-white/10 transition-colors font-medium text-slate-200"
+                  data-view="report-form">Submit Report</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="dashboard-view" class="view-section space-y-6">
+            <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
+              <div class="glass rounded-3xl p-5">
+                <div class="text-slate-400 text-sm">Total jobs analyzed</div>
+                <div id="stat-total-jobs" class="mt-2 text-3xl font-semibold tabular">0</div>
+              </div>
+              <div class="glass rounded-3xl p-5">
+                <div class="text-slate-400 text-sm">Scams detected</div>
+                <div id="stat-scams-detected" class="mt-2 text-3xl font-semibold tabular">0</div>
+              </div>
+              <div class="glass rounded-3xl p-5">
+                <div class="text-slate-400 text-sm">Verified recruiters</div>
+                <div id="stat-verified-recruiters" class="mt-2 text-3xl font-semibold tabular">0</div>
+              </div>
+              <div class="glass rounded-3xl p-5">
+                <div class="text-slate-400 text-sm">Total reports</div>
+                <div id="stat-total-reports" class="mt-2 text-3xl font-semibold tabular">0</div>
+              </div>
+            </div>
+
+            <div>
+              <h2 class="text-xl font-bold mb-4 mt-8 tracking-tight">Active Telemetry: Job Portals</h2>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="glass rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-pointer">
+                  <svg class="w-10 h-10" viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M20.447 20.452H16.92V14.88c0-1.328-.024-3.037-1.85-3.037-1.85 0-2.133 1.445-2.133 2.938v5.671H9.414V9h3.385v1.561h.047c.471-.89 1.62-1.83 3.333-1.83 3.568 0 4.228 2.348 4.228 5.4v6.321zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zM7.098 20.452H3.573V9h3.525v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                  </svg>
+                  <div class="font-mono text-sm tracking-widest uppercase">LinkedIn</div>
+                  <div class="text-[10px] uppercase tracking-widest text-emerald-500 flex items-center gap-2"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live sync</div>
+                </div>
+                <div class="glass rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-pointer">
+                  <svg class="w-10 h-10" viewBox="0 0 24 24" fill="#2164f3" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M9.13 19.53V4.46H4.46v15.07h4.67zm7.61-9.9c-2.3 0-3.69 1.46-3.69 3.64v6.26h-4.67V9.89h4.67v1.89h.06c.64-1.29 2.05-2.16 3.75-2.16 3.2 0 4.67 2.1 4.67 5v5.03H16.8v-4.52c0-1.22-.52-2.01-1.72-2.01-1.22 0-2 .81-2 2.18v4.35h-4.66v-9.64h3.77z" />
+                  </svg>
+                  <div class="font-mono text-sm tracking-widest uppercase">Indeed</div>
+                  <div class="text-[10px] uppercase tracking-widest text-emerald-500 flex items-center gap-2"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live sync</div>
+                </div>
+                <div class="glass rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-pointer">
+                  <svg class="w-10 h-10" viewBox="0 0 24 24" fill="#0CAA41" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.3 19V5h-1v14h1zm6.2 0V9.5h-1V19h1zm-12.4 0V9.5h-1V19h1z" />
+                  </svg>
+                  <div class="font-mono text-sm tracking-widest uppercase">Glassdoor</div>
+                  <div class="text-[10px] uppercase tracking-widest text-emerald-500 flex items-center gap-2"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live sync</div>
+                </div>
+                <div class="glass rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-pointer">
+                  <div class="text-3xl opacity-80">🚀</div>
+                  <div class="font-mono text-sm tracking-widest uppercase">Wellfound</div>
+                  <div class="text-[10px] uppercase tracking-widest text-emerald-500 flex items-center gap-2"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live sync</div>
+                </div>
+                <div class="glass rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-pointer">
+                  <div class="text-3xl opacity-80">👔</div>
+                  <div class="font-mono text-sm tracking-widest uppercase">Naukri</div>
+                  <div class="text-[10px] uppercase tracking-widest text-emerald-500 flex items-center gap-2"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live sync</div>
+                </div>
+                <div class="glass rounded-xl p-6 flex flex-col items-center justify-center gap-4 cursor-pointer">
+                  <div class="text-3xl opacity-80">👾</div>
+                  <div class="font-mono text-sm tracking-widest uppercase">Monster</div>
+                  <div class="text-[10px] uppercase tracking-widest text-emerald-500 flex items-center gap-2"><span
+                      class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live sync</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="scam-checker-view" class="view-section view-hidden">
+            <div class="glass rounded-[28px] p-6 lg:p-8">
+              <div class="max-w-4xl">
+                <h2 class="text-2xl font-semibold">Scam Checker</h2>
+                <p class="mt-2 text-slate-400">Paste the job details and verify the opportunity before applying.</p>
+              </div>
+              <form id="scamCheckerForm" class="mt-6 grid gap-4 max-w-4xl">
+                <div>
+                  <label class="block text-sm text-slate-300 mb-2">Job Description</label>
+                  <textarea id="jobDescription" required rows="7"
+                    class="w-full rounded-2xl bg-slate-950/60 soft-border px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500/60"></textarea>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2">Job URL</label>
+                    <input id="jobUrl" type="url" required
+                      class="w-full rounded-2xl bg-slate-950/60 soft-border px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500/60"
+                      placeholder="https://..." />
+                  </div>
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2">Recruiter Email</label>
+                    <input id="recruiterEmail" type="email" required
+                      class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors"
+                      placeholder="hr@company.com" />
+                  </div>
+                </div>
+                <button id="analyzeBtn" type="submit"
+                  class="btn-hover inline-flex items-center justify-center gap-3 rounded-2xl bg-white text-black font-semibold px-6 py-3 w-fit">
+                  <span>Analyze Posting</span>
+                </button>
+              </form>
+
+              <div id="analysisLoading" class="hidden mt-6 flex items-center gap-3 text-slate-300">
+                <div class="spinner"></div>
+                <span>Analyzing scam signals...</span>
+              </div>
+
+              <div id="analysisResult" class="hidden mt-6 grid gap-4">
+                <div class="glass rounded-3xl p-5">
+                  <div class="flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                      <div class="text-slate-400 text-sm">Scam score</div>
+                      <div id="resultScore" class="text-4xl font-semibold tabular mt-1">0</div>
+                    </div>
+                    <div id="resultRiskBadge" class="px-4 py-2 rounded-full text-sm font-semibold"></div>
+                  </div>
+                  <div class="mt-4 grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="soft-border rounded-2xl p-4">
+                      <div class="text-slate-400">Suspicious keywords</div>
+                      <div id="resultKeywords" class="mt-2 text-slate-100"></div>
+                    </div>
+                    <div class="soft-border rounded-2xl p-4">
+                      <div class="text-slate-400">Recommendation</div>
+                      <div id="resultRecommendation" class="mt-2 text-slate-100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="recruiter-verification-view" class="view-section view-hidden">
+            <div class="glass rounded-[28px] p-6 lg:p-8">
+              <h2 class="text-2xl font-semibold">Recruiter Verification</h2>
+              <p class="mt-2 text-slate-400">Search by recruiter email or company domain to see the trust status.</p>
+              <div class="mt-6 max-w-3xl flex flex-col md:flex-row gap-3">
+                <input id="verificationQuery" type="text"
+                  class="flex-1 rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors font-mono text-sm"
+                  placeholder="Recruiter email or domain" />
+                <button id="verifyRecruiterBtn"
+                  class="btn-hover px-6 py-3 rounded-2xl bg-white text-black font-semibold">Verify</button>
+              </div>
+              <div id="verificationResult" class="hidden mt-6 max-w-3xl">
+                <div id="verificationCard" class="glass rounded-3xl p-6">
+                  <div class="flex items-center justify-between gap-4 flex-wrap">
+                    <div>
+                      <div id="verificationTitle" class="text-2xl font-semibold">Recruiter</div>
+                      <div id="verificationMeta" class="text-slate-400 text-sm mt-1"></div>
+                    </div>
+                    <span id="verificationBadge" class="px-4 py-2 rounded-full text-sm font-semibold"></span>
+                  </div>
+                  <div class="mt-4 grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="soft-border rounded-2xl p-4">
+                      <div class="text-slate-400">Previous reports</div>
+                      <div id="verificationReports" class="mt-2 text-xl font-semibold tabular">0</div>
+                    </div>
+                    <div class="soft-border rounded-2xl p-4">
+                      <div class="text-slate-400">Trust score</div>
+                      <div id="verificationTrust" class="mt-2 text-xl font-semibold tabular">—</div>
+                    </div>
+                    <div class="soft-border rounded-2xl p-4">
+                      <div class="text-slate-400">Reason</div>
+                      <div id="verificationReason" class="mt-2 text-slate-100">—</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="profile-view" class="view-section view-hidden">
+            <div class="glass rounded-[28px] p-6 lg:p-8 mb-8">
+              <h2 class="text-3xl font-bold font-serif mb-2">Your Profile & Identity</h2>
+              <p class="text-slate-400">Connect your professional accounts to enhance our scam detection tailored for
+                you.</p>
+
+              <form id="profileForm" class="mt-8 grid gap-6 max-w-4xl">
+                <div class="flex items-center gap-6 mb-4">
+                  <div
+                    class="relative w-24 h-24 rounded-full bg-white/10 border border-white/20 flex items-center justify-center overflow-hidden hover:border-sky-400 transition-colors cursor-pointer group">
+                    <input type="file" id="profilePhotoUpload" class="absolute inset-0 opacity-0 cursor-pointer z-10"
+                      accept="image/*" />
+                    <img id="profilePhotoPreview" src="" class="absolute inset-0 w-full h-full object-cover hidden" />
+                    <div
+                      class="flex flex-col items-center justify-center text-slate-400 group-hover:text-sky-400 transition-colors">
+                      <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      </svg>
+                      <span class="text-[10px] uppercase font-bold tracking-widest">Photo</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="font-semibold text-lg text-slate-200">Avatar</div>
+                    <div class="text-sm text-slate-400">JPG, PNG up to 2MB.</div>
+                  </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2 font-medium">LinkedIn URL</label>
+                    <input id="profileLinkedin" type="url"
+                      class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-sky-400/50 focus:ring-1 focus:ring-sky-400/50 transition-all font-mono text-sm"
+                      placeholder="https://linkedin.com/in/..." />
+                  </div>
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2 font-medium">Indeed Profile URL</label>
+                    <input id="profileIndeed" type="url"
+                      class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-sky-400/50 focus:ring-1 focus:ring-sky-400/50 transition-all font-mono text-sm"
+                      placeholder="https://indeed.com/..." />
+                  </div>
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2 font-medium">Naukri Profile URL</label>
+                    <input id="profileNaukri" type="url"
+                      class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-sky-400/50 focus:ring-1 focus:ring-sky-400/50 transition-all font-mono text-sm"
+                      placeholder="https://naukri.com/..." />
+                  </div>
+                  <div class="flex items-end">
+                    <button type="submit" id="saveProfileBtn"
+                      class="btn-hover w-full flex items-center justify-center gap-3 rounded-2xl bg-white text-black font-semibold px-6 py-3">Save
+                      Links</button>
+                  </div>
+                </div>
+                <div id="profileStatus" class="hidden rounded-2xl px-4 py-3 text-sm mt-2"></div>
+              </form>
+            </div>
+
+            <div class="glass rounded-[28px] p-6 lg:p-8">
+              <div class="flex items-center gap-4 mb-4">
+                <div
+                  class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-lg text-white">
+                  A</div>
+                <div>
+                  <h2 class="text-2xl font-bold font-serif">ATS Score Checker</h2>
+                  <p class="text-slate-400 text-sm">Upload your resume to evaluate how well Applicant Tracking Systems
+                    can parse it.</p>
+                </div>
+              </div>
+
+              <div class="mt-8 grid lg:grid-cols-2 gap-8">
+                <div id="resumeUploadBox"
+                  class="border border-dashed border-white/20 rounded-3xl p-8 flex flex-col items-center justify-center text-center hover:border-sky-400/50 transition-colors cursor-pointer bg-white/5 relative">
+                  <input type="file" id="resumeUpload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    accept=".pdf,.doc,.docx" />
+                  <svg class="w-12 h-12 text-slate-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                  </svg>
+                  <div class="font-semibold text-lg mb-1 text-slate-200">Upload your Resume</div>
+                  <p class="text-slate-500 text-sm">PDF, DOCX up to 5MB</p>
+                  <div id="uploadFileName" class="mt-4 text-sky-400 font-mono text-sm hidden"></div>
+
+                  <div id="atsLoading"
+                    class="hidden absolute inset-0 bg-slate-900/80 backdrop-blur-sm rounded-3xl flex flex-col items-center justify-center">
+                    <div class="spinner"></div>
+                    <span class="mt-3 text-sm font-semibold">Parsing document...</span>
+                  </div>
+                </div>
+
+                <div id="atsResultPanel" class="glass rounded-3xl p-6 hidden">
+                  <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-semibold text-lg font-serif">Analysis Results</h3>
+                    <div
+                      class="w-16 h-16 rounded-full border-4 border-emerald-500 flex items-center justify-center font-bold text-xl tabular">
+                      <span id="atsScoreCircle">0</span>
+                    </div>
+                  </div>
+                  <div class="space-y-4">
+                    <div>
+                      <div class="text-sm text-slate-400 mb-1 flex justify-between"><span>Formatting & Parsing</span>
+                        <span id="atsFmtVal">0%</span></div>
+                      <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                        <div id="atsBarFormat" class="bg-emerald-500 h-full rounded-full transition-all duration-1000"
+                          style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="text-sm text-slate-400 mb-1 flex justify-between"><span>Keyword Match</span> <span
+                          id="atsKeyVal">0%</span></div>
+                      <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                        <div id="atsBarKeywords" class="bg-amber-500 h-full rounded-full transition-all duration-1000"
+                          style="width: 0%"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="text-sm text-slate-400 mb-1 flex justify-between"><span>Impact Metrics</span> <span
+                          id="atsImpVal">0%</span></div>
+                      <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                        <div id="atsBarImpact" class="bg-sky-500 h-full rounded-full transition-all duration-1000"
+                          style="width: 0%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mt-6 p-4 rounded-xl bg-white/5 border border-white/10 text-sm">
+                    <span class="font-medium text-slate-200">AI Feedback:</span> <span id="atsFeedbackText"
+                      class="text-slate-400"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="report-form-view" class="view-section view-hidden">
+            <div class="glass rounded-[28px] p-6 lg:p-8">
+              <h2 class="text-2xl font-semibold">Report Scam</h2>
+              <p class="mt-2 text-slate-400">Submit suspicious postings to help improve the fraud database.</p>
+              <form id="reportForm" class="mt-6 grid gap-4 max-w-4xl">
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2">Company Name</label>
+                    <input id="reportCompanyName" type="text" required
+                      class="w-full rounded-2xl bg-slate-950/60 soft-border px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500/60" />
+                  </div>
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2">Job URL</label>
+                    <input id="reportJobUrl" type="url" required
+                      class="w-full rounded-2xl bg-slate-950/60 soft-border px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500/60"
+                      placeholder="https://..." />
+                  </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm text-slate-300 mb-2">Scam Type</label>
+                    <select id="reportScamType" required
+                      class="w-full rounded-2xl bg-slate-950/60 soft-border px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500/60">
+                      <option value="">Select a scam type</option>
+                      <option value="registration_fee">Registration Fee</option>
+                      <option value="personal_information">Personal Information Theft</option>
+                      <option value="fake_company">Fake Company</option>
+                      <option value="salary_anomaly">Salary Anomaly</option>
+                      <option value="phishing">Phishing</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div></div>
+                </div>
+                <div>
+                  <label class="block text-sm text-slate-300 mb-2">Description</label>
+                  <textarea id="reportDescription" required rows="6"
+                    class="w-full rounded-2xl bg-white/5 border border-white/10 px-4 py-3 outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors"></textarea>
+                </div>
+                <button type="submit"
+                  class="btn-hover inline-flex items-center justify-center gap-3 rounded-2xl bg-white text-black font-semibold px-6 py-3 w-fit">Submit
+                  Report</button>
+                <div id="reportStatus" class="hidden rounded-2xl px-4 py-3 text-sm"></div>
+              </form>
+            </div>
+          </section>
+
+          <footer
+            class="mt-8 pt-8 pb-12 border-t border-white/5 text-center text-slate-500 text-sm flex flex-col items-center">
+            <div class="flex gap-6 mb-6">
+              <a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a>
+              <a href="#" class="hover:text-sky-400 transition-colors">Contact Us</a>
+              <a href="#" class="hover:text-sky-400 transition-colors">About Us</a>
+              <a href="/terms-and-conditions.pdf" target="_blank"
+                class="hover:text-sky-400 transition-colors flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                  </path>
+                </svg>
+                Terms & Conditions
+              </a>
+            </div>
+            <p class="font-serif italic text-lg mb-2 text-slate-400">ScamShield &copy; 2026</p>
+            <p>Ensuring transparency in the global job market.</p>
+          </footer>
+        </main>
+      </div>
+    </div>
+
+    <div id="authModal"
+      class="fixed inset-0 z-[1000] hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300"
+      style="opacity: 0;">
+      <div class="glass w-full max-w-md rounded-3xl p-8 relative mx-auto">
+        <button type="button" id="closeAuthModal"
+          class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 text-2xl leading-none">&times;</button>
+
+        <div class="text-center mb-6">
+          <div
+            class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400 flex items-center justify-center font-black text-slate-950 text-xl mb-3">
+            S</div>
+          <h2 id="authTitle" class="text-2xl font-bold">Welcome Back</h2>
+          <p id="authSubtitle" class="text-slate-400 text-sm mt-1">Sign in to your ScamShield account</p>
+        </div>
+
+        <form id="authForm" class="space-y-4">
+          <div id="authNameGroup" class="hidden">
+            <label class="block text-sm text-slate-300 mb-1">Full Name</label>
+            <input id="authName" type="text"
+              class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-2.5 outline-none focus:ring-2 focus:ring-sky-500/60"
+              placeholder="John Doe" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Email</label>
+            <input id="authEmail" type="email" required
+              class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-2.5 outline-none focus:ring-2 focus:ring-sky-500/60"
+              placeholder="you@example.com" />
+          </div>
+          <div>
+            <label class="block text-sm text-slate-300 mb-1">Password</label>
+            <input id="authPassword" type="password" required
+              class="w-full rounded-xl bg-slate-900/60 border border-slate-700 px-4 py-2.5 outline-none focus:ring-2 focus:ring-sky-500/60"
+              placeholder="••••••••" />
+          </div>
+
+          <div id="authError"
+            class="hidden text-rose-400 text-sm text-center bg-rose-500/10 py-2 rounded-lg border border-rose-500/20">
+          </div>
+
+          <button type="submit" id="authSubmitBtn"
+            class="w-full btn-hover bg-white text-black font-semibold py-3 rounded-xl mt-4 flex justify-center items-center gap-2 shadow-lg shadow-white/20">
+            <span>Sign In</span>
+          </button>
+        </form>
+
+        <div class="mt-6 text-center text-sm text-slate-400">
+          <span id="authToggleText">Don't have an account?</span>
+          <button type="button" id="authToggleBtn"
+            class="text-sky-400 font-medium hover:text-sky-300 hover:underline">Sign up</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
