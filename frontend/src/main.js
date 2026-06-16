@@ -3,6 +3,7 @@
    Orchestrates initialization of all modules in the correct sequence.
    ═══════════════════════════════════════════════════════════════════════════ */
 
+import { inject } from '@vercel/analytics';
 import { initParticleSystem }    from './modules/particles.js';
 import { initCustomCursor }      from './modules/cursor.js';
 import { initScrollAnimations }  from './modules/animations.js';
@@ -15,6 +16,9 @@ import { initFeatures }          from './modules/features.js';
  * Order matters: visual effects first, then logic layer.
  */
 function bootstrap() {
+  // Initialize Vercel Web Analytics
+  inject();
+  
   initCustomCursor();
   initScrollAnimations();
   initParticleSystem();
