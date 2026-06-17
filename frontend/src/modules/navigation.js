@@ -4,6 +4,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 import { isLoggedIn, toggleAuthModal } from './auth.js';
+import { startDashboard, stopDashboard } from './features.js';
 
 /* ─── View Map ──────────────────────────────────────────────────────────── */
 
@@ -27,6 +28,12 @@ export function showView(viewKey) {
   });
 
   setActiveButton(viewKey);
+
+  if (viewKey === 'dashboard') {
+    startDashboard();
+  } else {
+    stopDashboard();
+  }
 
   /* Collapse mobile menu on navigation */
   if (window.innerWidth < 1024) {
