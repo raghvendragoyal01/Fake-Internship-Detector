@@ -96,6 +96,7 @@ fake_job_scam_system/
    npm run dev
    ```
 4. Open `http://localhost:5173` in your browser.
+5. This is the live link of this project : https://fake-internship-detector-olps.vercel.app/
 
 ## 🔐 Environment Variables
 
