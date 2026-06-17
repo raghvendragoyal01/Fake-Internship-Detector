@@ -9,6 +9,7 @@ import { initScrollAnimations }  from './modules/animations.js';
 import { initAuth }              from './modules/auth.js';
 import { initNavigation }        from './modules/navigation.js';
 import { initFeatures }          from './modules/features.js';
+import { initAnalytics }         from './modules/analytics.js';
 
 /**
  * Bootstrap the entire application once the DOM is ready.
@@ -21,6 +22,7 @@ function bootstrap() {
   initAuth();
   initNavigation();
   initFeatures();
+  initAnalytics();
 }
 
 /* Run immediately — Vite injects the script as type="module" which
