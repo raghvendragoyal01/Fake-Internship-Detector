@@ -12,22 +12,20 @@ router = APIRouter(prefix="/api/v1", tags=["api"])
 
 ML_MODULE_CANDIDATES = [
     os.getenv("SCAM_ML_MODULE", "").strip(),
-    "backend.fraud_ml",
-    "backend.ml_engine",
-    "backend.ml",
-    "backend.fraud_engine",
-    "backend.models",
+    "ml_engine",
+    "ml",
     "fraud_ml",
+    "fraud_engine",
+    "models",
 ]
 
 DB_MODULE_CANDIDATES = [
     os.getenv("SCAM_DB_MODULE", "").strip(),
-    "backend.supabase_db",
-    "backend.database",
-    "backend.db",
-    "backend.supabase_client",
-    "backend.storage",
+    "database",
+    "db",
     "supabase_db",
+    "supabase_client",
+    "storage",
 ]
 
 def _unique_names(names):
