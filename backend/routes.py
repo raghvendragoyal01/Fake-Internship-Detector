@@ -12,20 +12,22 @@ router = APIRouter(prefix="/api/v1", tags=["api"])
 
 ML_MODULE_CANDIDATES = [
     os.getenv("SCAM_ML_MODULE", "").strip(),
-    "ml_engine",
-    "ml",
+    "backend.fraud_ml",
+    "backend.ml_engine",
+    "backend.ml",
+    "backend.fraud_engine",
+    "backend.models",
     "fraud_ml",
-    "fraud_engine",
-    "models",
 ]
 
 DB_MODULE_CANDIDATES = [
     os.getenv("SCAM_DB_MODULE", "").strip(),
-    "database",
-    "db",
+    "backend.supabase_db",
+    "backend.database",
+    "backend.db",
+    "backend.supabase_client",
+    "backend.storage",
     "supabase_db",
-    "supabase_client",
-    "storage",
 ]
 
 def _unique_names(names):
@@ -38,13 +40,18 @@ def _unique_names(names):
     return result
 
 def _load_module(candidates):
+    import traceback
     errors = []
     for module_name in _unique_names(candidates):
         try:
             return import_module(module_name)
         except Exception as exc:
+            tb = traceback.format_exc()
+            print(f"Failed to load {module_name}:\n{tb}")
             errors.append(f"{module_name}: {exc}")
-    raise RuntimeError("Unable to import any integration module. Tried: " + " | ".join(errors))
+    err_msg = "Unable to import any integration module. Tried: " + " | ".join(errors)
+    print("FATAL:", err_msg)
+    raise RuntimeError(err_msg)
 
 @lru_cache(maxsize=1)
 def ml_module():
@@ -55,6 +62,7 @@ def db_module():
     return _load_module(DB_MODULE_CANDIDATES)
 
 def _call_first_available(module, names, *args, **kwargs):
+    import traceback
     last_error = None
     for name in names:
         fn = getattr(module, name, None)
@@ -62,8 +70,12 @@ def _call_first_available(module, names, *args, **kwargs):
             try:
                 return fn(*args, **kwargs)
             except Exception as exc:
+                tb = traceback.format_exc()
+                print(f"Error calling {name}:\n{tb}")
                 last_error = exc
-    raise RuntimeError(f"None of the expected functions were usable: {names}. Last error: {last_error}")
+    err_msg = f"None of the expected functions were usable: {names}. Last error: {last_error}"
+    print("FATAL:", err_msg)
+    raise RuntimeError(err_msg)
 
 def _normalize_risk(score: Any, risk_level: Optional[str] = None) -> str:
     if risk_level:
