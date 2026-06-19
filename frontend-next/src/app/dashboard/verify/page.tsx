@@ -4,12 +4,29 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Loader2, ShieldCheck, ShieldAlert, Ban } from 'lucide-react';
 
+type CheckResult = {
+  status: string;
+  trust_score: number;
+  domain_name?: string;
+  previous_reports: number;
+  domain_age: number;
+  domain_ssl: boolean;
+  domain_email: boolean;
+  reason?: string;
+};
+
+type RecentCheck = {
+  query: string;
+  result: CheckResult;
+  date: string;
+};
+
 export default function VerifyRecruiterPage() {
   const [query, setQuery] = useState("");
   const [isScanning, setIsScanning] = useState(false);
-  const [result, setResult] = useState<Record<string, unknown> | null>(null);
+  const [result, setResult] = useState<CheckResult | null>(null);
   const [error, setError] = useState("");
-  const [recentChecks, setRecentChecks] = useState<Record<string, unknown>[]>(() => {
+  const [recentChecks, setRecentChecks] = useState<RecentCheck[]>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('scamshield_recent_verifications');
       if (saved) {
