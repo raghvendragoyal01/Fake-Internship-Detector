@@ -11,7 +11,7 @@ export default function Hero() {
 
   const [inputValue, setInputValue] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [verdictData, setVerdictData] = useState<Record<string, unknown> | null>(null);
+  const [verdictData, setVerdictData] = useState<any | null>(null);
 
   const router = useRouter();
 

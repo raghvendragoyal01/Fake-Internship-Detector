@@ -50,8 +50,8 @@ export default function ParticleField() {
       density: number;
 
       constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
+        this.x = Math.random() * canvas!.width;
+        this.y = Math.random() * canvas!.height;
         this.baseX = this.x;
         this.baseY = this.y;
         this.size = Math.random() * 2 + 0.5;
