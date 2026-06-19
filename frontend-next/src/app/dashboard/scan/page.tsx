@@ -22,7 +22,7 @@ export default function UserScanPage() {
         recruiter_email: recruiterEmail
       };
       
-      const res = await fetch('http://localhost:10000/api/v1/analyze', {
+      const res = await fetch('/api/v1/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

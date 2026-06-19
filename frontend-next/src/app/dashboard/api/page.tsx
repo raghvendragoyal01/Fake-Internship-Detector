@@ -42,7 +42,7 @@ export default function UserApiPage() {
   const fetchApiKey = async () => {
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/api-key', {
+      const res = await fetch('/api/v1/api-key', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -65,7 +65,7 @@ export default function UserApiPage() {
     setAuthError("");
     
     try {
-      const res = await fetch('http://localhost:10000/api/v1/auth/login', {
+      const res = await fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user?.email, password: password })
@@ -94,7 +94,7 @@ export default function UserApiPage() {
     setIsGenerating(true);
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/api-key/regenerate', {
+      const res = await fetch('/api/v1/api-key/regenerate', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

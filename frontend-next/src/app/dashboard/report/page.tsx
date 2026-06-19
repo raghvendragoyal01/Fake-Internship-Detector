@@ -47,7 +47,7 @@ export default function ReportScamPage() {
     setError("");
 
     try {
-      const res = await fetch('http://localhost:10000/api/v1/report', {
+      const res = await fetch('/api/v1/report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

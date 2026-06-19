@@ -35,7 +35,7 @@ export default function UserSettingsPage() {
 
   const fetchSettings = useCallback(async (token: string) => {
     try {
-      const res = await fetch('http://localhost:10000/api/v1/auth/settings', {
+      const res = await fetch('/api/v1/auth/settings', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -106,7 +106,7 @@ export default function UserSettingsPage() {
       
       // Auto-save the avatar URL to the backend
       const token = localStorage.getItem('scamshield_token');
-      await fetch('http://localhost:10000/api/v1/auth/update-settings', {
+      await fetch('/api/v1/auth/update-settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ export default function UserSettingsPage() {
     
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/auth/update-settings', {
+      const res = await fetch('/api/v1/auth/update-settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ export default function UserSettingsPage() {
     setIsUpdatingPassword(true);
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/auth/update-password', {
+      const res = await fetch('/api/v1/auth/update-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ export default function UserSettingsPage() {
     
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/auth/delete-account', {
+      const res = await fetch('/api/v1/auth/delete-account', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

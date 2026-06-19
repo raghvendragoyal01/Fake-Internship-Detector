@@ -22,7 +22,7 @@ export default function AdminTeam() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:10000/api/v1/admin/users');
+      const res = await fetch('/api/v1/admin/users');
       const data = await res.json();
       if (data.success) {
         setUsers(data.data || []);
@@ -37,7 +37,7 @@ export default function AdminTeam() {
   const updateRole = async (userId: string, currentRole: string) => {
     const newRole = currentRole === 'admin' ? 'user' : 'admin';
     try {
-      await fetch(`http://localhost:10000/api/v1/admin/users/${userId}/role`, {
+      await fetch(`/api/v1/admin/users/${userId}/role`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: newRole })
@@ -51,7 +51,7 @@ export default function AdminTeam() {
   const deleteUser = async (userId: string) => {
     if (!confirm('Are you sure you want to delete this user?')) return;
     try {
-      await fetch(`http://localhost:10000/api/v1/admin/users/${userId}`, {
+      await fetch(`/api/v1/admin/users/${userId}`, {
         method: 'DELETE'
       });
       fetchUsers();

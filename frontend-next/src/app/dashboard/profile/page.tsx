@@ -74,7 +74,7 @@ export default function UserProfilePage() {
   const fetchProfile = async () => {
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/profile', {
+      const res = await fetch('/api/v1/profile', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -130,7 +130,7 @@ export default function UserProfilePage() {
     setLinkMessage("");
     const token = localStorage.getItem('scamshield_token');
     try {
-      const res = await fetch('http://localhost:10000/api/v1/profile', {
+      const res = await fetch('/api/v1/profile', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -178,7 +178,7 @@ export default function UserProfilePage() {
     const token = localStorage.getItem('scamshield_token');
 
     try {
-      const res = await fetch('http://localhost:10000/api/v1/ats-analyze', {
+      const res = await fetch('/api/v1/ats-analyze', {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData

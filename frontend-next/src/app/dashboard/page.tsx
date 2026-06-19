@@ -37,7 +37,7 @@ export default function UserDashboard() {
     const parsedUser = JSON.parse(storedUser);
     setUser(parsedUser);
 
-    fetch(`http://localhost:10000/api/v1/user/dashboard-stats?email=${encodeURIComponent(parsedUser.email)}`)
+    fetch(`/api/v1/user/dashboard-stats?email=${encodeURIComponent(parsedUser.email)}`)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -52,7 +52,7 @@ export default function UserDashboard() {
     setIsScanning(true);
     setScanResult(null);
     try {
-      const res = await fetch('http://localhost:10000/api/v1/analyze', {
+      const res = await fetch('/api/v1/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: scanUrl, company_name: "Quick Scan", url: scanUrl })

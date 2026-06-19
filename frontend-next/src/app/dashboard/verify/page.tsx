@@ -59,7 +59,7 @@ export default function VerifyRecruiterPage() {
         params.append('domain', query);
       }
 
-      const res = await fetch(`http://localhost:10000/api/v1/recruiter-check?${params.toString()}`);
+      const res = await fetch(`/api/v1/recruiter-check?${params.toString()}`);
       const data = await res.json();
       
       if (data.success) {

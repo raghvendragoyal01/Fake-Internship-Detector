@@ -10,7 +10,7 @@ export default function AdminAnalytics() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:10000/api/v1/admin/dashboard-stats')
+    fetch('/api/v1/admin/dashboard-stats')
       .then(res => res.json())
       .then(data => {
         if (data.success) {

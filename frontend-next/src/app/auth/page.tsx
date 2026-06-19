@@ -38,7 +38,7 @@ export default function AuthPage() {
     setIsLoading(true);
     // Bridge Supabase Google Auth with our FastAPI JWT Auth
     try {
-      const res = await fetch('http://localhost:10000/api/v1/auth/oauth-login', {
+      const res = await fetch('/api/v1/auth/oauth-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email, name: user.user_metadata?.full_name || "Google User" })
@@ -85,7 +85,7 @@ export default function AuthPage() {
     const payload = isLogin ? { email, password } : { email, password, name };
 
     try {
-      const res = await fetch(`http://localhost:10000/api/v1/auth${endpoint}`, {
+      const res = await fetch(`/api/v1/auth${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

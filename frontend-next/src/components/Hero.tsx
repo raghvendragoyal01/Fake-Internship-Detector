@@ -34,7 +34,7 @@ export default function Hero() {
         source: 'manual'
       };
 
-      const response = await fetch('http://localhost:10000/api/v1/analyze', {
+      const response = await fetch('/api/v1/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

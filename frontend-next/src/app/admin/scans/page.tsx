@@ -18,7 +18,7 @@ export default function AdminScans() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:10000/api/v1/admin/scans')
+    fetch('/api/v1/admin/scans')
       .then(res => res.json())
       .then(data => {
         if (data.success) {

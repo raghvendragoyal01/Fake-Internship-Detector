@@ -26,7 +26,7 @@ export default function AdminReports() {
 
   const fetchReports = async () => {
     try {
-      const res = await fetch('http://localhost:10000/api/v1/admin/reports');
+      const res = await fetch('/api/v1/admin/reports');
       const data = await res.json();
       if (data.success) {
         setReports(data.data || []);
@@ -40,7 +40,7 @@ export default function AdminReports() {
 
   const resolveReport = async (reportId: string, status: string) => {
     try {
-      await fetch(`http://localhost:10000/api/v1/admin/reports/${reportId}/resolve`, {
+      await fetch(`/api/v1/admin/reports/${reportId}/resolve`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ export default function AdminReports() {
   const deleteReport = async (reportId: string) => {
     if (!confirm('Are you sure you want to delete this report permanently?')) return;
     try {
-      await fetch(`http://localhost:10000/api/v1/admin/reports/${reportId}`, {
+      await fetch(`/api/v1/admin/reports/${reportId}`, {
         method: 'DELETE'
       });
       fetchReports();

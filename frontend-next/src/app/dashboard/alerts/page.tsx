@@ -45,7 +45,7 @@ export default function UserAlertsPage() {
     setMessage("");
     setJobs([]);
     try {
-      const res = await fetch('http://localhost:10000/api/v1/subscribe-alerts', {
+      const res = await fetch('/api/v1/subscribe-alerts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: userEmail, skills })
