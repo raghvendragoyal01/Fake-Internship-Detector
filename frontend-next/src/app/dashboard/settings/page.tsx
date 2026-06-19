@@ -9,7 +9,7 @@ import { supabase } from '@/lib/supabase';
 
 export default function UserSettingsPage() {
   const router = useRouter();
-  const [user, setUser] = useState<Record<string, unknown> | null>(null);
+  const [user, setUser] = useState<{ name?: string, email?: string, avatar?: string } | null>(null);
   const [activeTab, setActiveTab] = useState('profile');
   const [isSaving, setIsSaving] = useState(false);
   const [showToast, setShowToast] = useState(false);
