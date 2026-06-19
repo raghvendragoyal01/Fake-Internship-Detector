@@ -44,6 +44,7 @@ export function updateAuthUI() {
   const userInfo     = document.getElementById('userInfoSidebar');
   const userName     = document.getElementById('userNameDisplay');
   const authBtn      = document.getElementById('authBtn');
+  const adminBtn     = document.getElementById('adminNavBtn');
 
   if (currentUser) {
     landingView?.classList.add('hidden');
@@ -52,6 +53,7 @@ export function updateAuthUI() {
     if (userInfo) userInfo.classList.remove('hidden');
     if (authBtn)  authBtn.style.display = 'none';
     if (userName) userName.textContent = currentUser.name || currentUser.email;
+    if (adminBtn) adminBtn.style.display = currentUser.role === 'admin' ? 'block' : 'none';
 
     startDashboard();
   } else {
@@ -60,6 +62,7 @@ export function updateAuthUI() {
 
     if (userInfo) userInfo.classList.add('hidden');
     if (authBtn)  authBtn.style.display = 'block';
+    if (adminBtn) adminBtn.style.display = 'none';
   }
 }
 

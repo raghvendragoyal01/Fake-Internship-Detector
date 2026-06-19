@@ -18,13 +18,15 @@ export function initFeatures() {
   bindReportForm();
   bindProfileForm();
   bindATSUpload();
+  bindDeveloperPortal();
+  bindJobAlerts();
 }
 
 /** Start (or restart) the dashboard polling loop. */
 export function startDashboard() {
   if (dashboardInterval) return;
   loadDashboard();
-  dashboardInterval = setInterval(loadDashboard, 5000);
+  dashboardInterval = setInterval(loadDashboard, 10000);
 }
 
 /** Stop the dashboard polling loop. */
@@ -39,8 +41,8 @@ export function stopDashboard() {
 
 async function loadDashboard() {
   try {
-    const { data } = await api.dashboard();
-    const stats = data?.stats || {};
+    const { data } = await api.getTelemetryStats();
+    const stats = data || {};
 
     setTextById('stat-total-jobs',         stats.total_jobs_analyzed ?? 0);
     setTextById('stat-scams-detected',     stats.scams_detected ?? 0);
@@ -51,10 +53,141 @@ async function loadDashboard() {
   }
 }
 
+/* ═══ ADMIN DASHBOARD ══════════════════════════════════════════════════════ */
+
+let riskChartInstance = null;
+let trendsChartInstance = null;
+
+export async function loadAdminDashboard() {
+  const user = getUser();
+  if (!user || user.role !== 'admin') {
+    return;
+  }
+  
+  try {
+    const { data } = await api.getAdminStats(user.token);
+    const stats = data.stats || {};
+    
+    setTextById('adminTotalJobs', stats.total_jobs_analyzed ?? 0);
+    setTextById('adminScamsDetected', stats.scams_detected ?? 0);
+    setTextById('adminTotalReports', stats.total_reports ?? 0);
+    
+    renderCharts(data);
+  } catch (err) {
+    console.error('[AdminDashboard] Fetch failed:', err.message);
+  }
+}
+
+function renderCharts(data) {
+  if (!window.Chart) return;
+  
+  const riskCtx = document.getElementById('riskPieChart');
+  const trendsCtx = document.getElementById('scamTrendsChart');
+  const stats = data.stats || {};
+  
+  if (riskChartInstance) riskChartInstance.destroy();
+  if (trendsChartInstance) trendsChartInstance.destroy();
+
+  if (riskCtx) {
+    // If the backend provided actual risk distribution, use it. Otherwise compute a fallback.
+    const riskData = data.risk_distribution || [];
+    let high = stats.scams_detected || 0;
+    let low = Math.max(0, (stats.total_jobs_analyzed || 0) - high);
+    let med = 0;
+
+    if (riskData.length > 0) {
+        low = riskData.find(r => r.risk_level === 'Low')?.count || 0;
+        med = riskData.find(r => r.risk_level === 'Medium')?.count || 0;
+        high = riskData.find(r => r.risk_level === 'High')?.count || 0;
+    }
+
+    riskChartInstance = new Chart(riskCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['High Risk', 'Medium Risk', 'Low Risk'],
+        datasets: [{
+          data: [high, med, low],
+          backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#cbd5e1' } }
+        }
+      }
+    });
+  }
+
+  if (trendsCtx) {
+    // If backend provided monthly_scam_trends, map them
+    const trends = data.monthly_scam_trends || [];
+    let labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    let dataset = [12, 19, 3, 5, 2, Math.min(20, stats.scams_detected || 0)];
+
+    if (trends.length > 0) {
+        labels = trends.map(t => t.month);
+        dataset = trends.map(t => t.count);
+    }
+
+    trendsChartInstance = new Chart(trendsCtx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Scams Detected',
+          data: dataset,
+          backgroundColor: '#3b82f6',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true, grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+          x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  }
+}
+
 /* ═══ SCAM CHECKER ══════════════════════════════════════════════════════════ */
 
 function bindScamChecker() {
   document.getElementById('scamCheckerForm')?.addEventListener('submit', handleScamAnalysis);
+  
+  // Auto-fetch job details when URL is pasted
+  const urlInput = document.getElementById('jobUrl');
+  if (urlInput) {
+    urlInput.addEventListener('blur', async (e) => {
+      const url = e.target.value.trim();
+      if (!url) return;
+      
+      try {
+        // Show a small loading state on the URL input
+        urlInput.style.opacity = '0.5';
+        const { data } = await api.fetchJob({ job_url: url });
+        
+        if (data.description && !document.getElementById('jobDescription').value) {
+            document.getElementById('jobDescription').value = data.description;
+        }
+        if (data.email && !document.getElementById('recruiterEmail').value) {
+            document.getElementById('recruiterEmail').value = data.email;
+        }
+        
+        // We also have domain_age now, we can inject it into the analysis later
+      } catch (err) {
+        console.warn("Auto-fetch failed:", err);
+      } finally {
+        urlInput.style.opacity = '1';
+      }
+    });
+  }
 }
 
 async function handleScamAnalysis(e) {
@@ -63,7 +196,6 @@ async function handleScamAnalysis(e) {
   const job_description = val('jobDescription');
   const job_url         = val('jobUrl');
   const recruiter_email = val('recruiterEmail');
-  if (!job_description || !job_url || !recruiter_email) return;
 
   const btn = document.getElementById('analyzeBtn');
   show('analysisLoading');
@@ -85,6 +217,9 @@ async function handleScamAnalysis(e) {
     const keywords = Array.isArray(result.suspicious_keywords) ? result.suspicious_keywords : [];
     setTextById('resultKeywords',       keywords.length ? keywords.join(', ') : 'None detected');
     setTextById('resultRecommendation', result.recommendation || 'Review manually before applying.');
+    
+    const domainInfo = result.domain_info || {};
+    setTextById('resultDomainAge', domainInfo.message || 'Unknown');
 
     show('analysisResult');
   } catch (err) {
@@ -131,6 +266,9 @@ async function handleRecruiterCheck() {
     setTextById('verificationReports', data.previous_reports ?? 0);
     setTextById('verificationTrust',   data.trust_score ?? '—');
     setTextById('verificationReason',  data.reason || 'No note provided');
+    
+    const domainInfo = data.domain_info || {};
+    setTextById('verificationDomainAge', domainInfo.message || 'Unknown');
 
     show('verificationResult');
   } catch (err) {
@@ -154,6 +292,7 @@ async function handleReportSubmit(e) {
     job_url:      val('reportJobUrl'),
     scam_type:    val('reportScamType'),
     description:  val('reportDescription'),
+    recruiter_email: val('reportRecruiterEmail'),
   };
 
   const statusEl = document.getElementById('reportStatus');
@@ -280,9 +419,9 @@ function bindATSUpload() {
       show('atsResultPanel');
 
       const score = data.overall_score || 0;
-      const fmt   = data.format_score  || 0;
-      const key   = data.keyword_score || 0;
-      const imp   = data.impact_score  || 0;
+      const fmt   = data.formatting_score  || 0;
+      const key   = data.keyword_match || 0;
+      const imp   = data.impact_metrics  || 0;
 
       setTimeout(() => {
         animateValue('atsScoreCircle', 0, score, 1500);
@@ -348,4 +487,208 @@ function statusClass(status) {
   if (v === 'verified')    return 'verified';
   if (v === 'blacklisted') return 'blacklisted';
   return 'suspicious';
+}
+
+/* --- DEVELOPER PORTAL ------------------------------------------------------ */
+
+export function bindDeveloperPortal() {
+  const portalView = document.getElementById("developer-api-view");
+  if (!portalView) return;
+
+  const keyInput = document.getElementById("devApiKeyInput");
+  const revealBtn = document.getElementById("devApiRevealBtn");
+  const regenBtn = document.getElementById("devApiRegenerateBtn");
+
+  // Modal elements
+  const modal = document.getElementById("apiAuthModal");
+  if (!modal) return;
+  const closeModalBtn = document.getElementById("closeApiAuthModal");
+  const authForm = document.getElementById("apiAuthForm");
+  const authError = document.getElementById("apiAuthError");
+  const pwdInput = document.getElementById("apiAuthPassword");
+  const revealSection = document.getElementById("apiRevealSection");
+  const revealedKeyInput = document.getElementById("apiRevealedKeyInput");
+  const copyBtn = document.getElementById("apiCopyKeyBtn");
+
+  // State
+  let modalMode = "reveal"; // "reveal" or "regenerate"
+
+  const MASKED_KEY = "********************************";
+
+  // Helper to update the curl code block to show masked key
+  const updateCurlCommand = (keyText) => {
+    const codeBlock = document.getElementById("devApiCurlCode");
+    if (codeBlock && codeBlock.textContent.includes("Bearer")) {
+      codeBlock.textContent = codeBlock.textContent.replace(/Bearer [a-zA-Z0-9_*]+/, `Bearer ${keyText}`);
+    }
+  };
+
+  const showModalError = (msg) => {
+    authError.textContent = msg;
+    authError.classList.remove("hidden");
+  };
+
+  const openModal = (mode) => {
+    modalMode = mode;
+    authForm.reset();
+    authForm.classList.remove("hidden");
+    revealSection.classList.add("hidden");
+    authError.classList.add("hidden");
+    
+    modal.classList.remove("hidden");
+    modal.style.display = 'flex';
+    void modal.offsetWidth; // Force reflow
+    modal.classList.add("modal-overlay--visible");
+    
+    pwdInput.focus();
+  };
+
+  const closeModal = () => {
+    modal.classList.remove("modal-overlay--visible");
+    setTimeout(() => {
+      modal.style.display = 'none';
+      modal.classList.add("hidden");
+      // Ensure the main page stays masked
+      if (keyInput) keyInput.value = MASKED_KEY;
+      updateCurlCommand(MASKED_KEY);
+      revealedKeyInput.value = "";
+      copyBtn.textContent = "Copy";
+    }, 300);
+  };
+
+  if (revealBtn) revealBtn.addEventListener("click", () => openModal("reveal"));
+  if (regenBtn) regenBtn.addEventListener("click", () => openModal("regenerate"));
+  closeModalBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", (e) => {
+    if (e.target.id === "apiAuthModal") closeModal();
+  });
+
+  // Handle Authentication and Key Fetching/Regeneration
+  authForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    authError.classList.add("hidden");
+    const user = getUser();
+    if (!user || !user.email || !user.token) {
+      showModalError("Please log in first.");
+      return;
+    }
+
+    const password = pwdInput.value;
+    const submitBtn = document.getElementById("apiAuthSubmitBtn");
+    submitBtn.disabled = true;
+    submitBtn.querySelector("span").textContent = "Verifying...";
+
+    try {
+      // Re-authenticate using the login endpoint
+      await api.login({ email: user.email, password: password });
+      
+      // If login succeeds, fetch or regenerate key
+      let apiKeyToDisplay = "";
+      if (modalMode === "regenerate") {
+        const { api_key } = await api.regenerateApiKey(user.token);
+        apiKeyToDisplay = api_key;
+      } else {
+        const { api_key } = await api.getApiKey(user.token);
+        apiKeyToDisplay = api_key || "No API Key generated yet. Please Regenerate.";
+      }
+
+      // Switch Modal to Reveal State
+      authForm.classList.add("hidden");
+      revealSection.classList.remove("hidden");
+      revealedKeyInput.value = apiKeyToDisplay;
+
+    } catch (err) {
+      showModalError(err.message || "Invalid password.");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.querySelector("span").textContent = "Verify";
+    }
+  });
+
+  // Handle Copy Button
+  copyBtn.addEventListener("click", async () => {
+    if (!revealedKeyInput.value) return;
+    try {
+      await navigator.clipboard.writeText(revealedKeyInput.value);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => { copyBtn.textContent = "Copy"; }, 2000);
+    } catch (err) {
+      console.error("Failed to copy", err);
+    }
+  });
+
+  // Initialize view as masked
+  if (keyInput) keyInput.value = MASKED_KEY;
+  updateCurlCommand(MASKED_KEY);
+}
+
+/* ═══ JOB ALERTS ══════════════════════════════════════════════════════════════ */
+
+function bindJobAlerts() {
+  document.getElementById('jobAlertsForm')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('alertEmail')?.value;
+    const skills = document.getElementById('alertSkills')?.value;
+    const btn = document.getElementById('alertSubmitBtn');
+    
+    show('alertLoading');
+    hide('alertResult');
+    if (btn) btn.disabled = true;
+    
+    try {
+      const res = await api.subscribeAlerts({ email, skills });
+      if (res && res.success) {
+        document.getElementById('alertResultMessage').textContent = 'Subscribed Successfully!';
+        document.getElementById('alertResultMessage').style.color = 'var(--color-success)';
+        
+        // Render jobs
+        if (res.jobs && res.jobs.length > 0) {
+          const container = document.getElementById('jobListingsContainer');
+          if (container) {
+            container.innerHTML = '';
+            res.jobs.forEach(job => {
+              const riskColor = job.risk_level === 'HIGH' ? 'var(--color-error)' : (job.risk_level === 'MEDIUM' ? 'var(--color-warning)' : 'var(--color-success)');
+              
+              const card = document.createElement('div');
+              card.className = 'glass result-card';
+              card.style.display = 'flex';
+              card.style.flexDirection = 'column';
+              card.style.gap = '0.5rem';
+              
+              card.innerHTML = `
+                <div class="result-card__header">
+                  <div>
+                    <div class="result-card__name" style="font-weight: 600;">${job.title}</div>
+                    <div class="result-card__meta">${job.company} • ${job.location}</div>
+                  </div>
+                  <span class="badge" style="background-color: ${riskColor}22; color: ${riskColor}; border: 1px solid ${riskColor}44;">
+                    ${job.risk_level} RISK (${job.scam_score})
+                  </span>
+                </div>
+                <div style="color: #a0aec0; font-size: 0.9rem;">${job.salary}</div>
+                <p style="font-size: 0.9rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin: 0;">${job.description || ''}</p>
+                <div style="margin-top: 0.5rem;">
+                  <a href="${job.url}" target="_blank" class="btn btn--outline btn--sm">View Job</a>
+                </div>
+              `;
+              container.appendChild(card);
+            });
+            document.getElementById('liveJobListings').classList.remove('hidden');
+          }
+        }
+      } else {
+        document.getElementById('alertResultMessage').textContent = res.message || 'Failed to subscribe';
+        document.getElementById('alertResultMessage').style.color = 'var(--color-error)';
+      }
+      show('alertResult');
+    } catch (err) {
+      document.getElementById('alertResultMessage').textContent = err.message || 'Failed to subscribe';
+      document.getElementById('alertResultMessage').style.color = 'var(--color-error)';
+      show('alertResult');
+    } finally {
+      hide('alertLoading');
+      if (btn) btn.disabled = false;
+    }
+  });
 }

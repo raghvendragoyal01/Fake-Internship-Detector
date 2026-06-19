@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #FFFFFF;
+  --color-foreground: #171717;
+  --color-muted: #666666;
+  --color-danger: #FF2D2D;
+  --color-safe: #00B368; /* Darker green for white bg readability */
+
+  --font-display: 'Clash Display', sans-serif;
+  --font-sans: 'General Sans', 'Inter', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --animate-blob: blob 20s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  --animate-marquee1: marquee1 30s linear infinite;
+  --animate-marquee2: marquee2 30s linear infinite;
+}
+
+@keyframes blob {
+  0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+  33% { transform: translate(-40%, -60%) scale(1.1) rotate(20deg); }
+  66% { transform: translate(-60%, -40%) scale(0.9) rotate(-20deg); }
+  100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+}
+
+@keyframes marquee1 {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes marquee2 {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  /* Film Grain Overlay using SVG - tuned for light mode */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+}
+
+/* Lenis Recommended Styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

@@ -10,6 +10,7 @@ import { initScrollAnimations }  from './modules/animations.js';
 import { initAuth }              from './modules/auth.js';
 import { initNavigation }        from './modules/navigation.js';
 import { initFeatures }          from './modules/features.js';
+import { initThreeJSBackground } from './modules/three_bg.js';
 
 /**
  * Bootstrap the entire application once the DOM is ready.
@@ -22,6 +23,7 @@ function bootstrap() {
   initCustomCursor();
   initScrollAnimations();
   initParticleSystem();
+  initThreeJSBackground();
   initAuth();
   initNavigation();
   initFeatures();

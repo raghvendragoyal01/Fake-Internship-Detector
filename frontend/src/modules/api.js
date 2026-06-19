@@ -4,7 +4,7 @@
    and error handling consistent across the app.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-const API_BASE = import.meta.env.VITE_API_URL || window.API_BASE_URL || 'http://localhost:8000/api/v1';
+const API_BASE = import.meta.env.VITE_API_URL || window.API_BASE_URL || 'http://localhost:10000/api/v1';
 
 /**
  * Generic fetch wrapper.
@@ -81,4 +81,36 @@ export const api = {
   /** POST /ats-analyze (FormData) */
   analyzeATS: (formData, token) =>
     request('/ats-analyze', { method: 'POST', body: formData, token }),
+
+  /** POST /fetch-job */
+  fetchJob: (payload) =>
+    request('/fetch-job', { method: 'POST', body: payload }),
+
+  /** POST /recommend-jobs */
+  recommendJobs: (payload) =>
+    request('/recommend-jobs', { method: 'POST', body: payload }),
+
+  /** POST /subscribe-alerts */
+  subscribeAlerts: (payload) =>
+    request('/subscribe-alerts', { method: 'POST', body: payload }),
+
+  /** GET /telemetry/stats */
+  getTelemetryStats: () =>
+    request('/telemetry/stats', { method: 'GET' }),
+
+  /** GET /api-key */
+  getApiKey: (token) =>
+    request('/api-key', { method: 'GET', token }),
+
+  /** POST /api-key/regenerate */
+  regenerateApiKey: (token) =>
+    request('/api-key/regenerate', { method: 'POST', token }),
+
+  /** GET /admin/dashboard-stats */
+  getAdminStats: (token) =>
+    request('/admin/dashboard-stats', { method: 'GET', token }),
+
+  /** GET /domain-check */
+  domainCheck: (domain) =>
+    request(`/domain-check?domain=${encodeURIComponent(domain)}`, { method: 'GET' }),
 };

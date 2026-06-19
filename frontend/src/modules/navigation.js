@@ -14,6 +14,9 @@ const VIEW_IDS = {
   'report-form':            'report-form-view',
   'profile-view':           'profile-view',
   'recruiter-verification': 'recruiter-verification-view',
+  'developer-api':          'developer-api-view',
+  'job-alerts-view':        'job-alerts-view',
+  'admin-dashboard-view':   'admin-dashboard-view',
 };
 
 /**
@@ -33,6 +36,10 @@ export function showView(viewKey) {
     startDashboard();
   } else {
     stopDashboard();
+  }
+
+  if (viewKey === 'admin-dashboard-view') {
+    import('./features.js').then(m => m.loadAdminDashboard());
   }
 
   /* Collapse mobile menu on navigation */
