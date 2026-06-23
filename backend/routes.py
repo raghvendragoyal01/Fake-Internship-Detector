@@ -151,6 +151,15 @@ async def analyze_scam(payload: ScamAnalyzeRequest):
         data = _safe_dict(result)
         scam_score = data.get("scam_score", data.get("score"))
         risk_level = _normalize_risk(scam_score, data.get("risk_level"))
+        db = db_module()
+        try:
+            _call_first_available(db, ["log_api_scan"], payload.dict(), {
+                "scam_score": scam_score,
+                "risk_level": risk_level
+            })
+        except Exception as log_err:
+            print(f"Non-fatal error logging API scan: {log_err}")
+
         return {
             "success": True,
             "message": "Analysis completed",

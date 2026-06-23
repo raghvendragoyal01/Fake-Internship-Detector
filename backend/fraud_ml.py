@@ -18,7 +18,7 @@ def predict_scam(payload: dict) -> dict:
     job_data = {
         "job_title": "", # the api doesn't have job_title explicitly, maybe it's in the description or just omit
         "company_name": payload.get("company_name", ""),
-        "job_description": payload.get("job_description", ""),
+        "job_description": payload.get("job_description") or payload.get("description", ""),
         "salary": "" # api doesn't provide salary
     }
     

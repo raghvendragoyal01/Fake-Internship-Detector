@@ -69,6 +69,41 @@ def save_scam_report(payload: dict) -> dict:
         print("Error saving scam report to Supabase:", e)
         return {"status": "error", "message": str(e)}
 
+def log_api_scan(payload: dict, result: dict) -> bool:
+    if not supabase:
+        return False
+        
+    try:
+        job_id = str(uuid.uuid4())
+        
+        # 1. Log to job_posts so it appears in "Scans" dashboard
+        job_payload = {
+            "job_id": job_id,
+            "company_name": payload.get("company_name", "API Scan"),
+            "source_url": str(payload.get("job_url", "")),
+        }
+        supabase.table('job_posts').insert(job_payload).execute()
+        
+        # 2. Log full details to api_scans table
+        scan_payload = {
+            "id": job_id,
+            "company_name": payload.get("company_name", "API Scan"),
+            "url": str(payload.get("job_url", "")),
+            "scam_score": result.get("scam_score", 0),
+            "risk_level": result.get("risk_level", "UNKNOWN"),
+            "created_at": datetime.utcnow().isoformat()
+        }
+        # This will fail gracefully if the api_scans table doesn't exist yet
+        try:
+            supabase.table('api_scans').insert(scan_payload).execute()
+        except Exception as table_err:
+            print(f"Note: api_scans table not found, skipped detailed log: {table_err}")
+            
+        return True
+    except Exception as e:
+        print(f"Error logging API scan to Supabase: {e}")
+        return False
+
 def get_recruiter_verification(params: dict) -> dict:
     email = params.get("email")
     domain = params.get("domain")
