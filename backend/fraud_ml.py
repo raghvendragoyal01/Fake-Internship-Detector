@@ -40,33 +40,38 @@ def predict_scam(payload: dict) -> dict:
     from backend.supabase_db import get_flagged_keywords
     db_keywords = get_flagged_keywords()
     
+    # 1. Always evaluate hardcoded suspicious terms
+    suspicious_terms = [
+        "urgent", "wire transfer", "bank account", "crypto", "bitcoin", 
+        "ssn", "social security", "pay immediately", "telegram", "whatsapp",
+        "typing from home", "data entry", "no experience required", "earn extra cash",
+        "easy money", "work from home typing"
+    ]
+    extreme_red_flags = [
+        "security deposit", "refundable deposit", "registration fee", 
+        "processing fee", "document verification fee", "onboarding fee",
+        "send money", "western union"
+    ]
+    
+    for term in suspicious_terms:
+        if term in text:
+            keywords.append(term)
+            heuristic_penalty += 15  # Increased penalty for common scam words
+            
+    for term in extreme_red_flags:
+        if term in text:
+            keywords.append(term)
+            heuristic_penalty += 50  # Instant +50 penalty for asking for money
+
+    # 2. Add any additional custom keywords from the database
     if db_keywords:
         for item in db_keywords:
             term = item.get("keyword", "").lower()
             weight = item.get("fraud_weight", 0.0)
-            if term and term in text:
-                keywords.append(term)
-                heuristic_penalty += float(weight) * 100 # convert 0.95 to 95 penalty points
-    else:
-        # Fallback if DB is empty
-        suspicious_terms = [
-            "urgent", "wire transfer", "bank account", "crypto", "bitcoin", 
-            "ssn", "social security", "pay immediately", "telegram", "whatsapp"
-        ]
-        extreme_red_flags = [
-            "security deposit", "refundable deposit", "registration fee", 
-            "processing fee", "document verification fee", "onboarding fee"
-        ]
-        
-        for term in suspicious_terms:
-            if term in text:
-                keywords.append(term)
-                heuristic_penalty += 5  # Add 5 points per suspicious keyword
-                
-        for term in extreme_red_flags:
-            if term in text:
-                keywords.append(term)
-                heuristic_penalty += 50  # Instant +50 penalty for asking for money
+            if term and term not in suspicious_terms and term not in extreme_red_flags:
+                if term in text:
+                    keywords.append(term)
+                    heuristic_penalty += float(weight) * 100 # convert 0.95 to 95 penalty points
             
     # Check URL and WHOIS domain age
     job_url_raw = payload.get("job_url")
