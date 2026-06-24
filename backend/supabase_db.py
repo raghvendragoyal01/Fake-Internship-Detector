@@ -280,6 +280,21 @@ def get_user_dashboard_stats(user_email: str) -> dict:
                 "reported_at": datetime.utcnow().isoformat()
             })
 
+        # Fetch API scans
+        try:
+            api_scans_res = supabase.table("api_scans").select("*").order("created_at", desc=True).limit(5).execute()
+            api_scans_data = getattr(api_scans_res, "data", []) or []
+            for scan in api_scans_data:
+                r_level = str(scan.get("risk_level", "UNKNOWN")).upper()
+                recent_scans.append({
+                    "company_name": scan.get("company_name", "API Scan") + " (API)",
+                    "url": scan.get("url", ""),
+                    "status": "SAFE" if r_level == "LOW" else "HIGH RISK",
+                    "reported_at": scan.get("created_at")
+                })
+        except Exception as api_err:
+            print(f"Error fetching api scans for dashboard: {api_err}")
+
         # Sort combined scans by date
         recent_scans.sort(key=lambda x: x["reported_at"], reverse=True)
 

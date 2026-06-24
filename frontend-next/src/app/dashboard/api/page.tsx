@@ -260,7 +260,7 @@ export default function UserApiPage() {
               <div>
                 <h4 className="font-medium text-black mb-3 text-sm">cURL Example</h4>
                 <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl relative group">
-                  <button onClick={() => handleCopy(`curl -X POST https://api.scamshield.io/v1/developer/analyze \\\n-H "Authorization: Bearer YOUR_API_KEY" \\\n-H "Content-Type: application/json" \\\n-d '{"company_name": "Tech Corp", "job_description": "We are hiring...", "recruiter_email": "jobs@techcorp.com"}'`)} 
+                  <button onClick={() => handleCopy(`curl -X POST https://api.scamshield.io/v1/developer/analyze \\\n-H "Authorization: Bearer YOUR_API_KEY" \\\n-H "Content-Type: application/json" \\\n-d '{"company_name": "Tech Corp", "job_url": "https://example.com/job", "job_description": "We are hiring...", "recruiter_email": "jobs@techcorp.com"}'`)} 
                     className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white/50 hover:text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
                     <Copy size={14} />
                   </button>
@@ -270,6 +270,7 @@ export default function UserApiPage() {
 -H <span className="text-yellow-300">"Content-Type: application/json"</span> \
 -d <span className="text-yellow-300">'{'{'}
   "company_name": "Tech Corp",
+  "job_url": "https://example.com/job",
   "job_description": "We are hiring...",
   "recruiter_email": "jobs@techcorp.com"
 {'}'}'</span>
@@ -280,7 +281,7 @@ export default function UserApiPage() {
               <div>
                 <h4 className="font-medium text-black mb-3 text-sm">PowerShell Example (Windows)</h4>
                 <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl relative group">
-                  <button onClick={() => handleCopy(`Invoke-RestMethod -Method Post -Uri "https://api.scamshield.io/v1/developer/analyze" \`\n-Headers @{ "Authorization" = "Bearer YOUR_API_KEY" } \`\n-ContentType "application/json" \`\n-Body '{"company_name":"Tech Corp","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"}'`)} 
+                  <button onClick={() => handleCopy(`Invoke-RestMethod -Method Post -Uri "https://api.scamshield.io/v1/developer/analyze" \`\n-Headers @{ "Authorization" = "Bearer YOUR_API_KEY" } \`\n-ContentType "application/json" \`\n-Body '{"company_name":"Tech Corp","job_url":"https://example.com/job","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"}'`)} 
                     className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white/50 hover:text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
                     <Copy size={14} />
                   </button>
@@ -288,7 +289,7 @@ export default function UserApiPage() {
 <span className="text-green-400">Invoke-RestMethod</span> -Method Post -Uri <span className="text-yellow-300">"https://api.scamshield.io/v1/developer/analyze"</span> `
 -Headers @{'{'} <span className="text-yellow-300">"Authorization"</span> = <span className="text-yellow-300">"Bearer YOUR_API_KEY"</span> {'}'} `
 -ContentType <span className="text-yellow-300">"application/json"</span> `
--Body <span className="text-yellow-300">'{'{'}"company_name":"Tech Corp","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"{'}'}'</span>
+-Body <span className="text-yellow-300">'{'{'}"company_name":"Tech Corp","job_url":"https://example.com/job","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"{'}'}'</span>
                   </div>
                 </div>
               </div>
@@ -296,7 +297,7 @@ export default function UserApiPage() {
               <div>
                 <h4 className="font-medium text-black mb-3 text-sm">Python Example</h4>
                 <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl relative group">
-                  <button onClick={() => handleCopy(`import requests\n\nurl = "https://api.scamshield.io/v1/developer/analyze"\nheaders = {\n  "Authorization": "Bearer YOUR_API_KEY",\n  "Content-Type": "application/json"\n}\ndata = {\n  "company_name": "Tech Corp",\n  "job_description": "We are hiring..."\n}\n\nresponse = requests.post(url, headers=headers, json=data)\nprint(response.json())`)} 
+                  <button onClick={() => handleCopy(`import requests\n\nurl = "https://api.scamshield.io/v1/developer/analyze"\nheaders = {\n  "Authorization": "Bearer YOUR_API_KEY",\n  "Content-Type": "application/json"\n}\ndata = {\n  "company_name": "Tech Corp",\n  "job_url": "https://example.com/job",\n  "job_description": "We are hiring..."\n}\n\nresponse = requests.post(url, headers=headers, json=data)\nprint(response.json())`)} 
                     className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white/50 hover:text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
                     <Copy size={14} />
                   </button>
@@ -310,6 +311,7 @@ headers = {'{'}
 {'}'}
 data = {'{'}
   <span className="text-yellow-300">"company_name"</span>: <span className="text-yellow-300">"Tech Corp"</span>,
+  <span className="text-yellow-300">"job_url"</span>: <span className="text-yellow-300">"https://example.com/job"</span>,
   <span className="text-yellow-300">"job_description"</span>: <span className="text-yellow-300">"We are hiring..."</span>
 {'}'}
 
