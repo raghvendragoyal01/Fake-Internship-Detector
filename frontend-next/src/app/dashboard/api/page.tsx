@@ -280,7 +280,7 @@ export default function UserApiPage() {
 <span className="text-green-400">Invoke-RestMethod</span> -Method Post -Uri <span className="text-yellow-300">"https://api.scamshield.io/v1/developer/analyze"</span> `
 -Headers @{'{'} <span className="text-yellow-300">"Authorization"</span> = <span className="text-yellow-300">"Bearer YOUR_API_KEY"</span> {'}'} `
 -ContentType <span className="text-yellow-300">"application/json"</span> `
--Body <span className="text-yellow-300">'{"company_name":"Tech Corp","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"}'</span>
+-Body <span className="text-yellow-300">'{'{'}"company_name":"Tech Corp","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"{'}'}'</span>
                   </div>
                 </div>
               </div>
