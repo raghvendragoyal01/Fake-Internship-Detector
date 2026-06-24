@@ -79,16 +79,16 @@ def log_api_scan(payload: dict, result: dict) -> bool:
         # 1. Log to job_posts so it appears in "Scans" dashboard
         job_payload = {
             "job_id": job_id,
-            "company_name": payload.get("company_name", "API Scan"),
-            "source_url": str(payload.get("job_url", "")),
+            "company_name": payload.get("company_name") or "API Scan",
+            "source_url": str(payload.get("job_url") or ""),
         }
         supabase.table('job_posts').insert(job_payload).execute()
         
         # 2. Log full details to api_scans table
         scan_payload = {
             "id": job_id,
-            "company_name": payload.get("company_name", "API Scan"),
-            "url": str(payload.get("job_url", "")),
+            "company_name": payload.get("company_name") or "API Scan",
+            "url": str(payload.get("job_url") or ""),
             "scam_score": result.get("scam_score", 0),
             "risk_level": result.get("risk_level", "UNKNOWN"),
             "created_at": datetime.utcnow().isoformat()

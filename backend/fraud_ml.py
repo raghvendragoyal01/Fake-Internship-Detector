@@ -56,7 +56,7 @@ def predict_scam(payload: dict) -> dict:
     for term in suspicious_terms:
         if term in text:
             keywords.append(term)
-            heuristic_penalty += 15  # Increased penalty for common scam words
+            heuristic_penalty += 25  # Increased penalty for common scam words to ensure they hit HIGH risk
             
     for term in extreme_red_flags:
         if term in text:

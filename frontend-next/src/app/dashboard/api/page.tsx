@@ -274,6 +274,18 @@ export default function UserApiPage() {
               </div>
 
               <div>
+                <h4 className="font-medium text-black mb-3 text-sm">PowerShell Example (Windows)</h4>
+                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl">
+                  <div className="p-4 overflow-x-auto whitespace-pre leading-relaxed text-white/80">
+<span className="text-green-400">Invoke-RestMethod</span> -Method Post -Uri <span className="text-yellow-300">"https://api.scamshield.io/v1/developer/analyze"</span> `
+-Headers @{'{'} <span className="text-yellow-300">"Authorization"</span> = <span className="text-yellow-300">"Bearer YOUR_API_KEY"</span> {'}'} `
+-ContentType <span className="text-yellow-300">"application/json"</span> `
+-Body <span className="text-yellow-300">'{"company_name":"Tech Corp","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"}'</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
                 <h4 className="font-medium text-black mb-3 text-sm">Python Example</h4>
                 <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl">
                   <div className="p-4 overflow-x-auto whitespace-pre leading-relaxed text-white/80">

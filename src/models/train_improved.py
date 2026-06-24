@@ -49,11 +49,11 @@ def main():
     print("Building pipeline...")
     feature_builder = FeatureUnion([
         ("tfidf", TfidfVectorizer(
-            stop_words=None,
-            max_features=15000,
-            ngram_range=(1, 3),
+            stop_words="english",
+            max_features=25000,
+            ngram_range=(1, 4),
             min_df=2,
-            max_df=0.95,
+            max_df=0.85,
             sublinear_tf=True
         )),
         ("scam_features", ScamKeywordTransformer())
@@ -64,8 +64,8 @@ def main():
         ("smote", SMOTE(random_state=42, k_neighbors=3)),
         ("model", LogisticRegression(
             max_iter=2000,
-            class_weight=None,
-            C=0.5,
+            class_weight='balanced',
+            C=5.0,
             penalty="l2",
             solver="liblinear",
             random_state=42
@@ -74,6 +74,26 @@ def main():
 
     print("Training model...")
     logistic_model.fit(X_train, y_train)
+
+    print("Evaluating model...")
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report
+    y_pred = logistic_model.predict(X_test)
+    
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    
+    print("\n" + "="*30)
+    print("MODEL EVALUATION METRICS:")
+    print("="*30)
+    print(f"Accuracy:  {accuracy * 100:.2f}%")
+    print(f"Precision: {precision * 100:.2f}%")
+    print(f"Recall:    {recall * 100:.2f}%")
+    print(f"F1 Score:  {f1 * 100:.2f}%")
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    print("="*30 + "\n")
 
     SCAM_THRESHOLD = 0.65
     
