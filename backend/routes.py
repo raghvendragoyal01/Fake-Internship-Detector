@@ -109,11 +109,11 @@ class ScamAnalyzeRequest(BaseModel):
     recruiter_email: Optional[str] = None
 
 class ScamReportRequest(BaseModel):
-    company_name: str = Field(min_length=1)
-    job_url: AnyUrl
-    scam_type: str = Field(min_length=1)
-    description: str = Field(min_length=1)
-    recruiter_email: Optional[EmailStr] = None
+    company_name: Optional[str] = None
+    job_url: Optional[str] = None
+    scam_type: Optional[str] = None
+    description: Optional[str] = None
+    recruiter_email: Optional[str] = None
     user_email: Optional[str] = None
     proof_file: Optional[str] = None
 

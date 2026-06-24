@@ -259,7 +259,11 @@ export default function UserApiPage() {
 
               <div>
                 <h4 className="font-medium text-black mb-3 text-sm">cURL Example</h4>
-                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl">
+                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl relative group">
+                  <button onClick={() => handleCopy(`curl -X POST https://api.scamshield.io/v1/developer/analyze \\\n-H "Authorization: Bearer YOUR_API_KEY" \\\n-H "Content-Type: application/json" \\\n-d '{"company_name": "Tech Corp", "job_description": "We are hiring...", "recruiter_email": "jobs@techcorp.com"}'`)} 
+                    className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white/50 hover:text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
+                    <Copy size={14} />
+                  </button>
                   <div className="p-4 overflow-x-auto whitespace-pre leading-relaxed text-white/80">
 <span className="text-green-400">curl</span> -X POST https://api.scamshield.io/v1/developer/analyze \
 -H <span className="text-yellow-300">"Authorization: Bearer YOUR_API_KEY"</span> \
@@ -275,7 +279,11 @@ export default function UserApiPage() {
 
               <div>
                 <h4 className="font-medium text-black mb-3 text-sm">PowerShell Example (Windows)</h4>
-                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl">
+                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl relative group">
+                  <button onClick={() => handleCopy(`Invoke-RestMethod -Method Post -Uri "https://api.scamshield.io/v1/developer/analyze" \`\n-Headers @{ "Authorization" = "Bearer YOUR_API_KEY" } \`\n-ContentType "application/json" \`\n-Body '{"company_name":"Tech Corp","job_description":"We are hiring...","recruiter_email":"jobs@techcorp.com"}'`)} 
+                    className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white/50 hover:text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
+                    <Copy size={14} />
+                  </button>
                   <div className="p-4 overflow-x-auto whitespace-pre leading-relaxed text-white/80">
 <span className="text-green-400">Invoke-RestMethod</span> -Method Post -Uri <span className="text-yellow-300">"https://api.scamshield.io/v1/developer/analyze"</span> `
 -Headers @{'{'} <span className="text-yellow-300">"Authorization"</span> = <span className="text-yellow-300">"Bearer YOUR_API_KEY"</span> {'}'} `
@@ -287,7 +295,11 @@ export default function UserApiPage() {
 
               <div>
                 <h4 className="font-medium text-black mb-3 text-sm">Python Example</h4>
-                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl">
+                <div className="bg-black text-white rounded-xl overflow-hidden font-mono text-sm shadow-xl relative group">
+                  <button onClick={() => handleCopy(`import requests\n\nurl = "https://api.scamshield.io/v1/developer/analyze"\nheaders = {\n  "Authorization": "Bearer YOUR_API_KEY",\n  "Content-Type": "application/json"\n}\ndata = {\n  "company_name": "Tech Corp",\n  "job_description": "We are hiring..."\n}\n\nresponse = requests.post(url, headers=headers, json=data)\nprint(response.json())`)} 
+                    className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 text-white/50 hover:text-white p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
+                    <Copy size={14} />
+                  </button>
                   <div className="p-4 overflow-x-auto whitespace-pre leading-relaxed text-white/80">
 <span className="text-pink-400">import</span> requests
 
