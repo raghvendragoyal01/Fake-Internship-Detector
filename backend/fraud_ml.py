@@ -45,7 +45,8 @@ def predict_scam(payload: dict) -> dict:
         "urgent", "wire transfer", "bank account", "crypto", "bitcoin", 
         "ssn", "social security", "pay immediately", "telegram", "whatsapp",
         "typing from home", "data entry", "no experience required", "earn extra cash",
-        "easy money", "work from home typing"
+        "easy money", "work from home typing", "rupees daily", "ruppees daily", 
+        "earn daily", "daily pay", "get paid daily"
     ]
     extreme_red_flags = [
         "security deposit", "refundable deposit", "registration fee", 
@@ -56,7 +57,7 @@ def predict_scam(payload: dict) -> dict:
     for term in suspicious_terms:
         if term in text:
             keywords.append(term)
-            heuristic_penalty += 25  # Increased penalty for common scam words to ensure they hit HIGH risk
+            heuristic_penalty += 35  # Increased penalty for common scam words to ensure they hit HIGH risk
             
     for term in extreme_red_flags:
         if term in text:

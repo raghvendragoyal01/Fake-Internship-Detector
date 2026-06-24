@@ -98,7 +98,8 @@ SCAM_KEYWORDS = [
     "limited seats", "limited vacancies", "urgent hiring", "immediate joining",
     "no interview", "direct selection", "instant joining", "guaranteed job",
     "work from home", "whatsapp", "telegram", "contact hr", "send resume on whatsapp",
-    "part time income", "freelance income", "less work", "2 hours", "3 hours"
+    "part time income", "freelance income", "less work", "2 hours", "3 hours",
+    "rupees", "ruppees", "daily pay", "get paid daily", "daily income"
 ]
 
 def clean_text_v2(text):

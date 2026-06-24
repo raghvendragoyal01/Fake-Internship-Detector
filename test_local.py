@@ -5,10 +5,10 @@ from backend.supabase_db import log_api_scan
 
 async def test():
     req = ScamAnalyzeRequest(
-        company_name="Test Company",
+        company_name="Tech Corp",
         job_url="https://example.com/job",
         scam_type="Data Entry",
-        description="Earn $500/hr by typing from home!"
+        description="We are hiring for data analyst get 5000 ruppees daily"
     )
     try:
         res = await analyze_scam(req)
